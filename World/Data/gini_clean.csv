@@ -1,0 +1,481 @@
+,Country Name,year,gini,key
+6,United Arab Emirates,2013,32.5,United Arab Emirates-2013
+7,Argentina,2013,40.9,Argentina-2013
+8,Armenia,2013,30.6,Armenia-2013
+12,Austria,2013,30.8,Austria-2013
+14,Burundi,2013,38.6,Burundi-2013
+15,Belgium,2013,27.7,Belgium-2013
+19,Bulgaria,2013,36.6,Bulgaria-2013
+23,Belarus,2013,26.6,Belarus-2013
+26,Bolivia,2013,47.6,Bolivia-2013
+27,Brazil,2013,52.8,Brazil-2013
+33,Canada,2013,33.8,Canada-2013
+35,Switzerland,2013,32.5,Switzerland-2013
+37,Chile,2013,45.8,Chile-2013
+38,China,2013,39.7,China-2013
+43,Colombia,2013,52.6,Colombia-2013
+46,Costa Rica,2013,49.3,Costa Rica-2013
+51,Cyprus,2013,37.0,Cyprus-2013
+52,Czech Republic,2013,26.5,Czech Republic-2013
+53,Germany,2013,31.1,Germany-2013
+54,Djibouti,2013,44.1,Djibouti-2013
+56,Denmark,2013,28.5,Denmark-2013
+57,Dominican Republic,2013,47.7,Dominican Republic-2013
+64,Ecuador,2013,46.9,Ecuador-2013
+68,Spain,2013,36.2,Spain-2013
+69,Estonia,2013,35.1,Estonia-2013
+73,Finland,2013,27.2,Finland-2013
+74,Fiji,2013,36.7,Fiji-2013
+75,France,2013,32.5,France-2013
+77,"Micronesia, Fed. Sts.",2013,40.1,"Micronesia, Fed. Sts.-2013"
+79,United Kingdom,2013,33.2,United Kingdom-2013
+80,Georgia,2013,38.6,Georgia-2013
+87,Greece,2013,36.1,Greece-2013
+95,Honduras,2013,52.6,Honduras-2013
+97,Croatia,2013,32.0,Croatia-2013
+99,Hungary,2013,31.5,Hungary-2013
+104,Indonesia,2013,40.0,Indonesia-2013
+109,Ireland,2013,33.5,Ireland-2013
+110,"Iran, Islamic Rep.",2013,37.4,"Iran, Islamic Rep.-2013"
+112,Iceland,2013,25.4,Iceland-2013
+114,Italy,2013,34.9,Italy-2013
+117,Japan,2013,32.9,Japan-2013
+118,Kazakhstan,2013,27.1,Kazakhstan-2013
+120,Kyrgyz Republic,2013,28.8,Kyrgyz Republic-2013
+141,Lithuania,2013,35.3,Lithuania-2013
+142,Luxembourg,2013,32.0,Luxembourg-2013
+143,Latvia,2013,35.5,Latvia-2013
+146,Morocco,2013,39.5,Morocco-2013
+148,Moldova,2013,28.5,Moldova-2013
+155,North Macedonia,2013,36.2,North Macedonia-2013
+157,Malta,2013,28.8,Malta-2013
+160,Montenegro,2013,39.0,Montenegro-2013
+167,Malaysia,2013,41.3,Malaysia-2013
+174,Netherlands,2013,28.1,Netherlands-2013
+175,Norway,2013,26.4,Norway-2013
+182,Pakistan,2013,30.7,Pakistan-2013
+183,Panama,2013,51.5,Panama-2013
+184,Peru,2013,43.9,Peru-2013
+188,Poland,2013,33.1,Poland-2013
+192,Portugal,2013,36.2,Portugal-2013
+193,Paraguay,2013,47.9,Paraguay-2013
+199,Romania,2013,36.9,Romania-2013
+200,Russian Federation,2013,40.9,Russian Federation-2013
+201,Rwanda,2013,45.1,Rwanda-2013
+209,El Salvador,2013,43.4,El Salvador-2013
+212,Serbia,2013,39.5,Serbia-2013
+219,Slovak Republic,2013,28.1,Slovak Republic-2013
+220,Slovenia,2013,26.2,Slovenia-2013
+221,Sweden,2013,28.8,Sweden-2013
+224,Seychelles,2013,46.8,Seychelles-2013
+231,Thailand,2013,37.8,Thailand-2013
+242,Turkey,2013,40.2,Turkey-2013
+246,Ukraine,2013,24.6,Ukraine-2013
+248,Uruguay,2013,40.5,Uruguay-2013
+249,United States,2013,40.7,United States-2013
+258,Samoa,2013,38.7,Samoa-2013
+259,Kosovo,2013,26.3,Kosovo-2013
+267,Albania,2014,34.6,Albania-2014
+271,Argentina,2014,41.6,Argentina-2014
+272,Armenia,2014,31.5,Armenia-2014
+275,Australia,2014,34.4,Australia-2014
+276,Austria,2014,30.5,Austria-2014
+279,Belgium,2014,28.1,Belgium-2014
+281,Burkina Faso,2014,35.3,Burkina Faso-2014
+283,Bulgaria,2014,37.4,Bulgaria-2014
+287,Belarus,2014,27.2,Belarus-2014
+290,Bolivia,2014,47.8,Bolivia-2014
+291,Brazil,2014,52.1,Brazil-2014
+297,Canada,2014,33.2,Canada-2014
+299,Switzerland,2014,32.5,Switzerland-2014
+302,China,2014,39.2,China-2014
+304,Cameroon,2014,46.6,Cameroon-2014
+307,Colombia,2014,52.6,Colombia-2014
+308,Comoros,2014,45.3,Comoros-2014
+310,Costa Rica,2014,48.6,Costa Rica-2014
+315,Cyprus,2014,35.6,Cyprus-2014
+316,Czech Republic,2014,25.9,Czech Republic-2014
+317,Germany,2014,30.9,Germany-2014
+320,Denmark,2014,28.4,Denmark-2014
+321,Dominican Republic,2014,44.3,Dominican Republic-2014
+328,Ecuador,2014,45.0,Ecuador-2014
+332,Spain,2014,36.1,Spain-2014
+333,Estonia,2014,34.6,Estonia-2014
+337,Finland,2014,26.8,Finland-2014
+339,France,2014,32.3,France-2014
+343,United Kingdom,2014,34.0,United Kingdom-2014
+344,Georgia,2014,37.6,Georgia-2014
+351,Greece,2014,35.8,Greece-2014
+354,Guatemala,2014,48.3,Guatemala-2014
+359,Honduras,2014,50.3,Honduras-2014
+361,Croatia,2014,32.1,Croatia-2014
+363,Hungary,2014,30.9,Hungary-2014
+368,Indonesia,2014,39.4,Indonesia-2014
+373,Ireland,2014,31.9,Ireland-2014
+374,"Iran, Islamic Rep.",2014,38.8,"Iran, Islamic Rep.-2014"
+376,Iceland,2014,27.8,Iceland-2014
+377,Israel,2014,39.8,Israel-2014
+378,Italy,2014,34.7,Italy-2014
+382,Kazakhstan,2014,27.0,Kazakhstan-2014
+384,Kyrgyz Republic,2014,26.8,Kyrgyz Republic-2014
+388,"Korea, Rep.",2014,31.2,"Korea, Rep.-2014"
+393,Liberia,2014,33.2,Liberia-2014
+405,Lithuania,2014,37.7,Lithuania-2014
+406,Luxembourg,2014,31.2,Luxembourg-2014
+407,Latvia,2014,35.1,Latvia-2014
+412,Moldova,2014,26.8,Moldova-2014
+416,Mexico,2014,48.7,Mexico-2014
+419,North Macedonia,2014,35.2,North Macedonia-2014
+421,Malta,2014,29.0,Malta-2014
+424,Montenegro,2014,38.8,Montenegro-2014
+425,Mongolia,2014,32.0,Mongolia-2014
+427,Mozambique,2014,54.0,Mozambique-2014
+428,Mauritania,2014,32.6,Mauritania-2014
+435,Niger,2014,34.3,Niger-2014
+437,Nicaragua,2014,46.2,Nicaragua-2014
+438,Netherlands,2014,28.6,Netherlands-2014
+439,Norway,2014,26.8,Norway-2014
+447,Panama,2014,50.5,Panama-2014
+448,Peru,2014,43.1,Peru-2014
+452,Poland,2014,32.8,Poland-2014
+456,Portugal,2014,35.6,Portugal-2014
+457,Paraguay,2014,50.7,Paraguay-2014
+463,Romania,2014,36.0,Romania-2014
+464,Russian Federation,2014,39.9,Russian Federation-2014
+468,Sudan,2014,34.2,Sudan-2014
+473,El Salvador,2014,41.6,El Salvador-2014
+476,Serbia,2014,40.5,Serbia-2014
+483,Slovak Republic,2014,26.1,Slovak Republic-2014
+484,Slovenia,2014,25.7,Slovenia-2014
+485,Sweden,2014,28.4,Sweden-2014
+495,Thailand,2014,37.0,Thailand-2014
+499,Timor-Leste,2014,28.7,Timor-Leste-2014
+506,Turkey,2014,41.2,Turkey-2014
+510,Ukraine,2014,24.0,Ukraine-2014
+512,Uruguay,2014,40.1,Uruguay-2014
+513,United States,2014,41.5,United States-2014
+519,Vietnam,2014,34.8,Vietnam-2014
+523,Kosovo,2014,27.3,Kosovo-2014
+524,"Yemen, Rep.",2014,36.7,"Yemen, Rep.-2014"
+525,South Africa,2014,63.0,South Africa-2014
+531,Albania,2015,32.9,Albania-2015
+536,Armenia,2015,32.4,Armenia-2015
+540,Austria,2015,30.5,Austria-2015
+543,Belgium,2015,27.7,Belgium-2015
+544,Benin,2015,47.8,Benin-2015
+547,Bulgaria,2015,38.6,Bulgaria-2015
+551,Belarus,2015,25.6,Belarus-2015
+554,Bolivia,2015,46.7,Bolivia-2015
+555,Brazil,2015,51.9,Brazil-2015
+559,Botswana,2015,53.3,Botswana-2015
+561,Canada,2015,33.7,Canada-2015
+563,Switzerland,2015,32.3,Switzerland-2015
+565,Chile,2015,44.4,Chile-2015
+566,China,2015,38.6,China-2015
+567,Cote d'Ivoire,2015,41.5,Cote d'Ivoire-2015
+571,Colombia,2015,51.0,Colombia-2015
+573,Cabo Verde,2015,42.4,Cabo Verde-2015
+574,Costa Rica,2015,48.4,Costa Rica-2015
+579,Cyprus,2015,34.0,Cyprus-2015
+580,Czech Republic,2015,25.9,Czech Republic-2015
+581,Germany,2015,31.7,Germany-2015
+584,Denmark,2015,28.2,Denmark-2015
+585,Dominican Republic,2015,45.2,Dominican Republic-2015
+592,Ecuador,2015,46.0,Ecuador-2015
+593,"Egypt, Arab Rep.",2015,31.8,"Egypt, Arab Rep.-2015"
+596,Spain,2015,36.2,Spain-2015
+597,Estonia,2015,32.7,Estonia-2015
+598,Ethiopia,2015,35.0,Ethiopia-2015
+601,Finland,2015,27.1,Finland-2015
+603,France,2015,32.7,France-2015
+607,United Kingdom,2015,33.2,United Kingdom-2015
+608,Georgia,2015,36.5,Georgia-2015
+612,"Gambia, The",2015,35.9,"Gambia, The-2015"
+615,Greece,2015,36.0,Greece-2015
+623,Honduras,2015,49.8,Honduras-2015
+625,Croatia,2015,31.1,Croatia-2015
+627,Hungary,2015,30.4,Hungary-2015
+632,Indonesia,2015,39.7,Indonesia-2015
+637,Ireland,2015,31.8,Ireland-2015
+638,"Iran, Islamic Rep.",2015,39.5,"Iran, Islamic Rep.-2015"
+640,Iceland,2015,26.8,Iceland-2015
+642,Italy,2015,35.4,Italy-2015
+646,Kazakhstan,2015,26.8,Kazakhstan-2015
+647,Kenya,2015,40.8,Kenya-2015
+648,Kyrgyz Republic,2015,29.0,Kyrgyz Republic-2015
+669,Lithuania,2015,37.4,Lithuania-2015
+670,Luxembourg,2015,32.9,Luxembourg-2015
+671,Latvia,2015,34.2,Latvia-2015
+676,Moldova,2015,27.0,Moldova-2015
+683,North Macedonia,2015,35.6,North Macedonia-2015
+685,Malta,2015,29.4,Malta-2015
+686,Myanmar,2015,38.1,Myanmar-2015
+688,Montenegro,2015,39.0,Montenegro-2015
+695,Malaysia,2015,41.1,Malaysia-2015
+697,Namibia,2015,59.1,Namibia-2015
+702,Netherlands,2015,28.2,Netherlands-2015
+703,Norway,2015,27.5,Norway-2015
+710,Pakistan,2015,32.6,Pakistan-2015
+711,Panama,2015,50.8,Panama-2015
+712,Peru,2015,43.4,Peru-2015
+713,Philippines,2015,44.6,Philippines-2015
+716,Poland,2015,31.8,Poland-2015
+720,Portugal,2015,35.5,Portugal-2015
+721,Paraguay,2015,47.6,Paraguay-2015
+727,Romania,2015,35.9,Romania-2015
+728,Russian Federation,2015,37.7,Russian Federation-2015
+737,El Salvador,2015,40.6,El Salvador-2015
+740,Serbia,2015,40.5,Serbia-2015
+747,Slovak Republic,2015,26.5,Slovak Republic-2015
+748,Slovenia,2015,25.4,Slovenia-2015
+749,Sweden,2015,29.2,Sweden-2015
+758,Togo,2015,43.1,Togo-2015
+759,Thailand,2015,36.0,Thailand-2015
+760,Tajikistan,2015,34.0,Tajikistan-2015
+765,Tonga,2015,37.6,Tonga-2015
+769,Tunisia,2015,32.8,Tunisia-2015
+770,Turkey,2015,42.9,Turkey-2015
+774,Ukraine,2015,25.5,Ukraine-2015
+776,Uruguay,2015,40.1,Uruguay-2015
+777,United States,2015,41.2,United States-2015
+787,Kosovo,2015,26.5,Kosovo-2015
+790,Zambia,2015,57.1,Zambia-2015
+795,Albania,2016,33.7,Albania-2016
+799,Argentina,2016,42.0,Argentina-2016
+800,Armenia,2016,32.5,Armenia-2016
+804,Austria,2016,30.8,Austria-2016
+807,Belgium,2016,27.6,Belgium-2016
+810,Bangladesh,2016,32.4,Bangladesh-2016
+811,Bulgaria,2016,40.6,Bulgaria-2016
+815,Belarus,2016,25.3,Belarus-2016
+818,Bolivia,2016,45.3,Bolivia-2016
+819,Brazil,2016,53.3,Brazil-2016
+825,Canada,2016,32.7,Canada-2016
+827,Switzerland,2016,33.0,Switzerland-2016
+830,China,2016,38.5,China-2016
+835,Colombia,2016,50.6,Colombia-2016
+838,Costa Rica,2016,48.7,Costa Rica-2016
+843,Cyprus,2016,32.9,Cyprus-2016
+844,Czech Republic,2016,25.4,Czech Republic-2016
+845,Germany,2016,31.9,Germany-2016
+848,Denmark,2016,28.2,Denmark-2016
+849,Dominican Republic,2016,45.7,Dominican Republic-2016
+856,Ecuador,2016,45.0,Ecuador-2016
+860,Spain,2016,35.8,Spain-2016
+861,Estonia,2016,31.2,Estonia-2016
+865,Finland,2016,27.1,Finland-2016
+867,France,2016,31.9,France-2016
+871,United Kingdom,2016,34.8,United Kingdom-2016
+872,Georgia,2016,36.6,Georgia-2016
+873,Ghana,2016,43.5,Ghana-2016
+879,Greece,2016,35.0,Greece-2016
+887,Honduras,2016,49.8,Honduras-2016
+889,Croatia,2016,30.9,Croatia-2016
+891,Hungary,2016,30.3,Hungary-2016
+896,Indonesia,2016,38.6,Indonesia-2016
+901,Ireland,2016,32.8,Ireland-2016
+902,"Iran, Islamic Rep.",2016,40.0,"Iran, Islamic Rep.-2016"
+904,Iceland,2016,27.2,Iceland-2016
+905,Israel,2016,39.0,Israel-2016
+906,Italy,2016,35.2,Italy-2016
+910,Kazakhstan,2016,27.2,Kazakhstan-2016
+912,Kyrgyz Republic,2016,26.8,Kyrgyz Republic-2016
+916,"Korea, Rep.",2016,31.4,"Korea, Rep.-2016"
+921,Liberia,2016,35.3,Liberia-2016
+923,St. Lucia,2016,51.2,St. Lucia-2016
+928,Sri Lanka,2016,39.3,Sri Lanka-2016
+933,Lithuania,2016,38.4,Lithuania-2016
+934,Luxembourg,2016,31.7,Luxembourg-2016
+935,Latvia,2016,34.3,Latvia-2016
+940,Moldova,2016,26.3,Moldova-2016
+942,Maldives,2016,31.3,Maldives-2016
+944,Mexico,2016,46.3,Mexico-2016
+947,North Macedonia,2016,34.5,North Macedonia-2016
+949,Malta,2016,29.1,Malta-2016
+952,Montenegro,2016,38.5,Montenegro-2016
+953,Mongolia,2016,32.3,Mongolia-2016
+958,Malawi,2016,44.7,Malawi-2016
+966,Netherlands,2016,28.2,Netherlands-2016
+967,Norway,2016,28.5,Norway-2016
+975,Panama,2016,50.4,Panama-2016
+976,Peru,2016,43.6,Peru-2016
+980,Poland,2016,31.2,Poland-2016
+984,Portugal,2016,35.2,Portugal-2016
+985,Paraguay,2016,47.9,Paraguay-2016
+986,West Bank and Gaza,2016,33.7,West Bank and Gaza-2016
+991,Romania,2016,34.4,Romania-2016
+992,Russian Federation,2016,36.8,Russian Federation-2016
+993,Rwanda,2016,43.7,Rwanda-2016
+1001,El Salvador,2016,40.0,El Salvador-2016
+1004,Serbia,2016,38.8,Serbia-2016
+1006,South Sudan,2016,44.1,South Sudan-2016
+1011,Slovak Republic,2016,25.2,Slovak Republic-2016
+1012,Slovenia,2016,24.8,Slovenia-2016
+1013,Sweden,2016,29.6,Sweden-2016
+1014,Eswatini,2016,54.6,Eswatini-2016
+1023,Thailand,2016,36.9,Thailand-2016
+1034,Turkey,2016,41.9,Turkey-2016
+1037,Uganda,2016,42.8,Uganda-2016
+1038,Ukraine,2016,25.0,Ukraine-2016
+1040,Uruguay,2016,39.7,Uruguay-2016
+1041,United States,2016,41.1,United States-2016
+1047,Vietnam,2016,35.3,Vietnam-2016
+1051,Kosovo,2016,26.7,Kosovo-2016
+1059,Albania,2017,33.2,Albania-2017
+1063,Argentina,2017,41.1,Argentina-2017
+1064,Armenia,2017,33.6,Armenia-2017
+1068,Austria,2017,29.7,Austria-2017
+1071,Belgium,2017,27.4,Belgium-2017
+1075,Bulgaria,2017,40.4,Bulgaria-2017
+1079,Belarus,2017,25.4,Belarus-2017
+1082,Bolivia,2017,44.6,Bolivia-2017
+1083,Brazil,2017,53.3,Brazil-2017
+1086,Bhutan,2017,37.4,Bhutan-2017
+1089,Canada,2017,33.3,Canada-2017
+1091,Switzerland,2017,32.7,Switzerland-2017
+1093,Chile,2017,44.4,Chile-2017
+1099,Colombia,2017,49.7,Colombia-2017
+1102,Costa Rica,2017,48.3,Costa Rica-2017
+1107,Cyprus,2017,31.4,Cyprus-2017
+1108,Czech Republic,2017,24.9,Czech Republic-2017
+1110,Djibouti,2017,41.6,Djibouti-2017
+1112,Denmark,2017,28.7,Denmark-2017
+1113,Dominican Republic,2017,42.2,Dominican Republic-2017
+1120,Ecuador,2017,44.7,Ecuador-2017
+1121,"Egypt, Arab Rep.",2017,31.5,"Egypt, Arab Rep.-2017"
+1124,Spain,2017,34.7,Spain-2017
+1125,Estonia,2017,30.4,Estonia-2017
+1129,Finland,2017,27.4,Finland-2017
+1131,France,2017,31.6,France-2017
+1134,Gabon,2017,38.0,Gabon-2017
+1135,United Kingdom,2017,35.1,United Kingdom-2017
+1136,Georgia,2017,37.9,Georgia-2017
+1143,Greece,2017,34.4,Greece-2017
+1151,Honduras,2017,49.4,Honduras-2017
+1153,Croatia,2017,30.4,Croatia-2017
+1155,Hungary,2017,30.6,Hungary-2017
+1160,Indonesia,2017,38.1,Indonesia-2017
+1165,Ireland,2017,31.4,Ireland-2017
+1166,"Iran, Islamic Rep.",2017,40.8,"Iran, Islamic Rep.-2017"
+1168,Iceland,2017,26.1,Iceland-2017
+1170,Italy,2017,35.9,Italy-2017
+1174,Kazakhstan,2017,27.5,Kazakhstan-2017
+1176,Kyrgyz Republic,2017,27.3,Kyrgyz Republic-2017
+1195,Lesotho,2017,44.9,Lesotho-2017
+1197,Lithuania,2017,37.3,Lithuania-2017
+1198,Luxembourg,2017,34.5,Luxembourg-2017
+1199,Latvia,2017,35.6,Latvia-2017
+1204,Moldova,2017,25.9,Moldova-2017
+1211,North Macedonia,2017,34.2,North Macedonia-2017
+1213,Malta,2017,29.2,Malta-2017
+1214,Myanmar,2017,30.7,Myanmar-2017
+1221,Mauritius,2017,36.8,Mauritius-2017
+1230,Netherlands,2017,28.5,Netherlands-2017
+1231,Norway,2017,27.0,Norway-2017
+1239,Panama,2017,49.9,Panama-2017
+1240,Peru,2017,43.3,Peru-2017
+1244,Poland,2017,29.7,Poland-2017
+1248,Portugal,2017,33.8,Portugal-2017
+1249,Paraguay,2017,48.5,Paraguay-2017
+1255,Romania,2017,36.0,Romania-2017
+1256,Russian Federation,2017,37.2,Russian Federation-2017
+1265,El Salvador,2017,38.0,El Salvador-2017
+1267,Somalia,2017,36.8,Somalia-2017
+1268,Serbia,2017,36.2,Serbia-2017
+1273,Sao Tome and Principe,2017,56.3,Sao Tome and Principe-2017
+1276,Slovenia,2017,24.2,Slovenia-2017
+1277,Sweden,2017,28.8,Sweden-2017
+1287,Thailand,2017,36.5,Thailand-2017
+1298,Turkey,2017,41.4,Turkey-2017
+1300,Tanzania,2017,40.5,Tanzania-2017
+1302,Ukraine,2017,26.0,Ukraine-2017
+1304,Uruguay,2017,39.5,Uruguay-2017
+1305,United States,2017,41.2,United States-2017
+1315,Kosovo,2017,29.0,Kosovo-2017
+1319,Zimbabwe,2017,44.3,Zimbabwe-2017
+1322,Angola,2018,51.3,Angola-2018
+1326,United Arab Emirates,2018,26.0,United Arab Emirates-2018
+1327,Argentina,2018,41.3,Argentina-2018
+1328,Armenia,2018,34.4,Armenia-2018
+1332,Austria,2018,30.8,Austria-2018
+1335,Belgium,2018,27.2,Belgium-2018
+1339,Bulgaria,2018,41.3,Bulgaria-2018
+1343,Belarus,2018,25.2,Belarus-2018
+1346,Bolivia,2018,42.6,Bolivia-2018
+1347,Brazil,2018,53.9,Brazil-2018
+1355,Switzerland,2018,33.1,Switzerland-2018
+1363,Colombia,2018,50.4,Colombia-2018
+1366,Costa Rica,2018,48.0,Costa Rica-2018
+1371,Cyprus,2018,32.7,Cyprus-2018
+1372,Czech Republic,2018,25.0,Czech Republic-2018
+1376,Denmark,2018,28.2,Denmark-2018
+1377,Dominican Republic,2018,43.7,Dominican Republic-2018
+1384,Ecuador,2018,45.4,Ecuador-2018
+1388,Spain,2018,34.7,Spain-2018
+1389,Estonia,2018,30.3,Estonia-2018
+1393,Finland,2018,27.3,Finland-2018
+1395,France,2018,32.4,France-2018
+1400,Georgia,2018,36.4,Georgia-2018
+1407,Greece,2018,32.9,Greece-2018
+1415,Honduras,2018,48.9,Honduras-2018
+1417,Croatia,2018,29.7,Croatia-2018
+1419,Hungary,2018,29.6,Hungary-2018
+1424,Indonesia,2018,37.8,Indonesia-2018
+1430,"Iran, Islamic Rep.",2018,42.0,"Iran, Islamic Rep.-2018"
+1438,Kazakhstan,2018,27.8,Kazakhstan-2018
+1440,Kyrgyz Republic,2018,27.7,Kyrgyz Republic-2018
+1447,Lao PDR,2018,38.8,Lao PDR-2018
+1461,Lithuania,2018,35.7,Lithuania-2018
+1462,Luxembourg,2018,35.4,Luxembourg-2018
+1463,Latvia,2018,35.1,Latvia-2018
+1468,Moldova,2018,25.7,Moldova-2018
+1472,Mexico,2018,45.4,Mexico-2018
+1475,North Macedonia,2018,33.0,North Macedonia-2018
+1477,Malta,2018,28.7,Malta-2018
+1481,Mongolia,2018,32.7,Mongolia-2018
+1492,Nigeria,2018,35.1,Nigeria-2018
+1494,Netherlands,2018,28.1,Netherlands-2018
+1495,Norway,2018,27.6,Norway-2018
+1502,Pakistan,2018,31.6,Pakistan-2018
+1503,Panama,2018,49.2,Panama-2018
+1504,Peru,2018,42.4,Peru-2018
+1505,Philippines,2018,42.3,Philippines-2018
+1508,Poland,2018,30.2,Poland-2018
+1512,Portugal,2018,33.5,Portugal-2018
+1513,Paraguay,2018,46.0,Paraguay-2018
+1519,Romania,2018,35.8,Romania-2018
+1520,Russian Federation,2018,37.5,Russian Federation-2018
+1528,Sierra Leone,2018,35.7,Sierra Leone-2018
+1529,El Salvador,2018,38.6,El Salvador-2018
+1539,Slovak Republic,2018,25.0,Slovak Republic-2018
+1540,Slovenia,2018,24.6,Slovenia-2018
+1541,Sweden,2018,30.0,Sweden-2018
+1544,Seychelles,2018,32.1,Seychelles-2018
+1551,Thailand,2018,36.4,Thailand-2018
+1562,Turkey,2018,41.9,Turkey-2018
+1566,Ukraine,2018,26.1,Ukraine-2018
+1568,Uruguay,2018,39.7,Uruguay-2018
+1569,United States,2018,41.4,United States-2018
+1575,Vietnam,2018,35.7,Vietnam-2018
+1591,Argentina,2019,42.9,Argentina-2019
+1592,Armenia,2019,29.9,Armenia-2019
+1607,Belarus,2019,25.3,Belarus-2019
+1610,Bolivia,2019,41.6,Bolivia-2019
+1611,Brazil,2019,53.4,Brazil-2019
+1627,Colombia,2019,51.3,Colombia-2019
+1630,Costa Rica,2019,48.2,Costa Rica-2019
+1641,Dominican Republic,2019,41.9,Dominican Republic-2019
+1648,Ecuador,2019,45.7,Ecuador-2019
+1664,Georgia,2019,35.9,Georgia-2019
+1679,Honduras,2019,48.2,Honduras-2019
+1688,Indonesia,2019,38.2,Indonesia-2019
+1704,Kyrgyz Republic,2019,29.7,Kyrgyz Republic-2019
+1767,Panama,2019,49.8,Panama-2019
+1768,Peru,2019,41.5,Peru-2019
+1777,Paraguay,2019,45.7,Paraguay-2019
+1793,El Salvador,2019,38.8,El Salvador-2019
+1815,Thailand,2019,34.9,Thailand-2019
+1826,Turkey,2019,41.9,Turkey-2019
+1830,Ukraine,2019,26.6,Ukraine-2019
+1832,Uruguay,2019,39.7,Uruguay-2019
+1847,Zimbabwe,2019,50.3,Zimbabwe-2019
