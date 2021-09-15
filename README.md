@@ -3,6 +3,12 @@
 - 🌱 I’m currently learning machine learning
 - 📫 How to reach me: maite.marzoratti@gmail.com
 
+# My Projects
+### World: World Economic Freedom & Happiness Report
+In this porject I'll be analyzing the Economic Freedom Index and the World Happiness Report and how they relate to each other. Finally I will build a linear regression model to explan differences in each country's score.
+
+Capabilities: analysis, data visualization, manipulating and joining multiple datasets, cluster analysis, linear regression 
+
 <!---
 mmarzora/mmarzora is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 You can click the Preview link to take a look at your changes.
