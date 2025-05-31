@@ -3,9 +3,10 @@ import { v4 as uuidv4 } from 'uuid';
 import SessionCreate from './SessionCreate';
 import SessionJoin from './SessionJoin';
 import { sessionService, Session } from '../services/sessionService';
+import { matchingService } from '../services/matchingService';
 
 interface SessionManagerProps {
-  onSessionStart: (session: Session) => void;
+  onSessionStart: (session: Session, useSmartMatching: boolean) => void;
 }
 
 const SessionManager: React.FC<SessionManagerProps> = ({ onSessionStart }) => {
@@ -15,15 +16,44 @@ const SessionManager: React.FC<SessionManagerProps> = ({ onSessionStart }) => {
   const [currentSession, setCurrentSession] = useState<Session | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [useSmartMatching, setUseSmartMatching] = useState(true);
+  const [algorithmAvailable, setAlgorithmAvailable] = useState<boolean | null>(null);
+
+  // Check algorithm availability on mount
+  useEffect(() => {
+    const checkAlgorithm = async () => {
+      try {
+        await matchingService.healthCheck();
+        setAlgorithmAvailable(true);
+      } catch (error) {
+        console.warn('MovieMatch algorithm not available:', error);
+        setAlgorithmAvailable(false);
+        setUseSmartMatching(false);
+      }
+    };
+    
+    checkAlgorithm();
+  }, []);
 
   const handleSessionUpdate = useCallback((updatedSession: Session | null) => {
     console.log('[SessionManager] Firestore update received:', updatedSession);
     if (updatedSession) {
-      setCurrentSession(updatedSession);
+      // Only update current session state without triggering onSessionStart
+      setCurrentSession(prevSession => {
+        // Deep comparison to avoid unnecessary updates
+        if (JSON.stringify(prevSession) !== JSON.stringify(updatedSession)) {
+          return updatedSession;
+        }
+        return prevSession;
+      });
       setSessionCode(updatedSession.code);
-      onSessionStart(updatedSession);
+      
+      // Only call onSessionStart for initial session setup or member changes
+      if (!currentSession || currentSession.members.length !== updatedSession.members.length) {
+        onSessionStart(updatedSession, useSmartMatching && algorithmAvailable === true);
+      }
     }
-  }, [onSessionStart]);
+  }, [onSessionStart, useSmartMatching, algorithmAvailable, currentSession]);
 
   useEffect(() => {
     if (!sessionId || !memberIdRef.current) return;
@@ -72,6 +102,13 @@ const SessionManager: React.FC<SessionManagerProps> = ({ onSessionStart }) => {
       setIsRefreshing(false);
     }
   }, [sessionId, handleSessionUpdate]);
+
+  const handleSmartMatchingToggle = useCallback((enabled: boolean) => {
+    setUseSmartMatching(enabled);
+    if (currentSession) {
+      onSessionStart(currentSession, enabled && algorithmAvailable === true);
+    }
+  }, [currentSession, onSessionStart, algorithmAvailable]);
 
   const otherMemberId = useMemo(() => 
     currentSession?.members.find(id => id !== memberIdRef.current),
@@ -133,8 +170,55 @@ const SessionManager: React.FC<SessionManagerProps> = ({ onSessionStart }) => {
       fontSize: '16px',
       fontWeight: 'bold' as const,
       zIndex: 1000
+    },
+    smartMatchingSection: {
+      background: algorithmAvailable ? 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' : '#6c757d',
+      color: 'white',
+      padding: '15px',
+      borderRadius: '8px',
+      marginTop: '15px'
+    },
+    toggleContainer: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginBottom: '10px'
+    },
+    toggle: {
+      position: 'relative' as const,
+      display: 'inline-block',
+      width: '60px',
+      height: '34px'
+    },
+    toggleInput: {
+      opacity: 0,
+      width: 0,
+      height: 0
+    },
+    slider: {
+      position: 'absolute' as const,
+      cursor: algorithmAvailable ? 'pointer' : 'not-allowed',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: algorithmAvailable && useSmartMatching ? '#4CAF50' : '#ccc',
+      transition: '0.4s',
+      borderRadius: '34px',
+      opacity: algorithmAvailable ? 1 : 0.5
+    },
+    sliderButton: {
+      position: 'absolute' as const,
+      content: '""',
+      height: '26px',
+      width: '26px',
+      left: useSmartMatching && algorithmAvailable ? '30px' : '4px',
+      bottom: '4px',
+      backgroundColor: 'white',
+      transition: '0.4s',
+      borderRadius: '50%'
     }
-  }), [isRefreshing]);
+  }), [isRefreshing, algorithmAvailable, useSmartMatching]);
 
   if (!sessionCode) {
     return (
@@ -178,6 +262,40 @@ const SessionManager: React.FC<SessionManagerProps> = ({ onSessionStart }) => {
           </div>
           <p className="code" style={sessionStyles.code}>{sessionCode}</p>
           <p style={{ margin: 0 }}>Share this code with your movie partner!</p>
+          
+          {/* Smart Matching Toggle */}
+          <div style={sessionStyles.smartMatchingSection}>
+            <div style={sessionStyles.toggleContainer}>
+              <div>
+                <h4 style={{ margin: '0 0 5px 0' }}>🧠 Smart Matching Algorithm</h4>
+                <p style={{ margin: 0, fontSize: '0.9rem', opacity: 0.9 }}>
+                  {algorithmAvailable === null && 'Checking availability...'}
+                  {algorithmAvailable === false && 'Algorithm unavailable - using random movies'}
+                  {algorithmAvailable === true && (useSmartMatching 
+                    ? 'Personalized recommendations enabled' 
+                    : 'Using random movie selection')}
+                </p>
+              </div>
+              {algorithmAvailable && (
+                <label style={sessionStyles.toggle}>
+                  <input 
+                    type="checkbox" 
+                    checked={useSmartMatching}
+                    onChange={(e) => handleSmartMatchingToggle(e.target.checked)}
+                    style={sessionStyles.toggleInput}
+                  />
+                  <span style={{...sessionStyles.slider}}>
+                    <span style={sessionStyles.sliderButton}></span>
+                  </span>
+                </label>
+              )}
+            </div>
+            {algorithmAvailable && useSmartMatching && (
+              <small style={{ opacity: 0.8 }}>
+                ✨ Algorithm learns your preferences and finds better matches over time
+              </small>
+            )}
+          </div>
         </div>
         {currentSession && (
           <div className="session-status" style={{ position: 'relative' }}>

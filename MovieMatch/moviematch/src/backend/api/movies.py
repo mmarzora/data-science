@@ -6,7 +6,7 @@ from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from ..database import get_db_session
+from ..database import get_db
 from ..services.movie_service import movie_service
 from ..schemas.movie import MovieResponse, MovieList
 
@@ -17,7 +17,7 @@ async def get_random_movies(
     limit: int = 20,
     year_start: Optional[int] = None,
     minRating: Optional[float] = None,
-    db: Session = Depends(get_db_session)
+    db: Session = Depends(get_db)
 ):
     """Get random movies with optional filters."""
     movies = movie_service.get_random_movies(
@@ -29,7 +29,7 @@ async def get_random_movies(
     return {"movies": movies}
 
 @router.get("/{movie_id}", response_model=MovieResponse)
-async def get_movie(movie_id: int, db: Session = Depends(get_db_session)):
+async def get_movie(movie_id: int, db: Session = Depends(get_db)):
     """Get details for a specific movie."""
     movie = movie_service.get_movie(db=db, movie_id=movie_id)
     if not movie:
@@ -40,7 +40,7 @@ async def get_movie(movie_id: int, db: Session = Depends(get_db_session)):
 async def get_similar_movies(
     movie_id: int,
     limit: int = 5,
-    db: Session = Depends(get_db_session)
+    db: Session = Depends(get_db)
 ):
     """Get similar movies based on embedding similarity."""
     movies = movie_service.get_similar_movies(

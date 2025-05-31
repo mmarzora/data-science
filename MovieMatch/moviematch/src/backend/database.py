@@ -22,17 +22,17 @@ def init_db():
     """Initialize the database schema."""
     Base.metadata.create_all(bind=engine)
 
-@contextmanager
 def get_db():
-    """Get a database session."""
+    """Get a database session (for FastAPI dependency injection)."""
     db = SessionLocal()
     try:
         yield db
     finally:
         db.close()
 
-def get_db_session():
-    """Get a database session (for FastAPI dependency injection)."""
+@contextmanager
+def get_db_context():
+    """Get a database session as context manager."""
     db = SessionLocal()
     try:
         yield db

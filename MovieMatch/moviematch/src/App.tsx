@@ -5,11 +5,13 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { collection, getDocs, enableNetwork, disableNetwork } from 'firebase/firestore';
 import SessionManager from './components/SessionManager';
 import MovieMatching from './components/MovieMatching';
+import SmartMovieMatching from './components/SmartMovieMatching';
 import { Session, sessionService } from './services/sessionService';
 
 function App() {
   const [user, setUser] = useState<any>(null);
   const [session, setSession] = useState<Session | null>(null);
+  const [useSmartMatching, setUseSmartMatching] = useState(false);
   const [firebaseError, setFirebaseError] = useState<string | null>(null);
   const [isConnecting, setIsConnecting] = useState(true);
   const [memberId, setMemberId] = useState<string>(() => 
@@ -66,29 +68,41 @@ function App() {
     return () => unsubscribe();
   }, []);
 
-  // Real-time Firestore session listener
+  // Real-time Firestore session listener - Optimized to prevent duplicates
   useEffect(() => {
     // Clean up previous listener
     if (unsubscribeRef.current) {
       unsubscribeRef.current();
       unsubscribeRef.current = null;
     }
-    if (session) {
+    
+    // Only set up listener if we have a session and don't already have one
+    if (session?.code && !unsubscribeRef.current) {
       unsubscribeRef.current = sessionService.subscribeToSession(session.code, (updatedSession) => {
-        if (updatedSession) setSession(updatedSession);
+        if (updatedSession) {
+          // Only update if session data actually changed
+          setSession(prevSession => {
+            if (JSON.stringify(prevSession) !== JSON.stringify(updatedSession)) {
+              return updatedSession;
+            }
+            return prevSession;
+          });
+        }
       });
     }
+    
     return () => {
       if (unsubscribeRef.current) {
         unsubscribeRef.current();
         unsubscribeRef.current = null;
       }
     };
-  }, [session?.code]);
+  }, [session?.code]); // Only depend on session code, not entire session object
 
-  const handleSessionStart = (newSession: Session) => {
-    console.log('Session started:', newSession);
+  const handleSessionStart = (newSession: Session, smartMatchingEnabled: boolean) => {
+    console.log('Session started:', newSession, 'Smart matching:', smartMatchingEnabled);
     setSession(newSession);
+    setUseSmartMatching(smartMatchingEnabled);
     if (newSession.members.length > 0) {
       const currentMemberId = newSession.members[newSession.members.length - 1];
       setMemberId(currentMemberId);
@@ -115,6 +129,15 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>MovieMatch</h1>
+        {session && (
+          <div className="app-status">
+            {useSmartMatching ? (
+              <span className="smart-badge">🧠 Smart Algorithm</span>
+            ) : (
+              <span className="random-badge">🎲 Random Selection</span>
+            )}
+          </div>
+        )}
       </header>
       <main>
         {firebaseError ? (
@@ -131,8 +154,17 @@ function App() {
             <div className="session-info">
               <h2>Session Code: {session.code}</h2>
               <p>Share this code with your movie partner!</p>
+              {useSmartMatching && (
+                <p className="smart-info">
+                  ✨ Using personalized recommendations that learn your preferences
+                </p>
+              )}
             </div>
-            <MovieMatching session={session} memberId={memberId} />
+            {useSmartMatching ? (
+              <SmartMovieMatching session={session} memberId={memberId} />
+            ) : (
+              <MovieMatching session={session} memberId={memberId} />
+            )}
           </div>
         )}
       </main>
