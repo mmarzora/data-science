@@ -126,17 +126,60 @@
   text-align: right;
 }
 
-/* Enhanced Movie Card */
-.movie-card {
-  background: white;
-  border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-  overflow: hidden;
-  margin-bottom: 30px;
-  position: relative;
-  transition: transform 0.2s ease;
+/* Why Button */
+.why-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  opacity: 0.9;
+  user-select: none;
 }
 
+.why-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+  opacity: 1;
+}
+
+.why-button:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
+}
+
+/* Responsive adjustments for why button */
+@media (max-width: 768px) {
+  .why-button {
+    top: 10px;
+    right: 10px;
+    padding: 6px 10px;
+    font-size: 0.75rem;
+  }
+}
+
+/* Movie Card positioning for button */
+.movie-card {
+  position: relative;
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  margin: 20px 0;
+}
+
+/* Enhanced Movie Card */
 .movie-card:hover {
   transform: translateY(-2px);
   box-shadow: 0 12px 48px rgba(0, 0, 0, 0.2);
@@ -645,20 +688,25 @@
 }
 
 .preferences-toggle,
+.semantic-analysis-toggle,
 .history-toggle {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 25px;
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.8), rgba(168, 85, 247, 0.9));
   color: white;
-  padding: 10px 20px;
-  font-size: 0.9rem;
-  font-weight: 500;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 25px;
+  font-weight: 600;
+  font-size: 0.95rem;
   cursor: pointer;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(139, 92, 246, 0.3);
   backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  white-space: nowrap;
 }
 
 .preferences-toggle:hover,
+.semantic-analysis-toggle:hover,
 .history-toggle:hover {
   background: rgba(255, 255, 255, 0.2);
   border-color: rgba(255, 255, 255, 0.4);
@@ -667,6 +715,7 @@
 }
 
 .preferences-toggle:active,
+.semantic-analysis-toggle:active,
 .history-toggle:active {
   transform: translateY(0);
 }
@@ -680,6 +729,7 @@
   }
   
   .preferences-toggle,
+  .semantic-analysis-toggle,
   .history-toggle {
     width: 100%;
     max-width: 200px;

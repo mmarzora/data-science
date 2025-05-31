@@ -10,6 +10,8 @@ import {
 import { movieService } from '../services/movieService';
 import UserHistory from './UserHistory';
 import PreferencesComparison from './PreferencesComparison';
+import SemanticPreferencesComparison from './SemanticPreferencesComparison';
+import RecommendationExplanation from './RecommendationExplanation';
 import './SmartMovieMatching.css';
 
 interface SmartMovieMatchingProps {
@@ -32,6 +34,8 @@ const SmartMovieMatching: React.FC<SmartMovieMatchingProps> = ({ session, member
   const [isPosterLoading, setIsPosterLoading] = useState(true);
   const [isProcessingSwipe, setIsProcessingSwipe] = useState(false);
   const [showPreferences, setShowPreferences] = useState(false);
+  const [showSemanticAnalysis, setShowSemanticAnalysis] = useState(false);
+  const [showExplanation, setShowExplanation] = useState(false);
   const [loadingMatchedMovie, setLoadingMatchedMovie] = useState(false);
   
   // Algorithm-specific states
@@ -437,6 +441,16 @@ const SmartMovieMatching: React.FC<SmartMovieMatchingProps> = ({ session, member
         />
       )}
 
+      {/* Semantic Preferences Analysis */}
+      {algorithmEnabled && matchingSessionId && otherMemberId && showSemanticAnalysis && (
+        <SemanticPreferencesComparison
+          user1Id={memberId}
+          user2Id={otherMemberId}
+          user1Name="You"
+          user2Name="Partner"
+        />
+      )}
+
       {/* Movie Card */}
       <div className="movie-card">
         {isPosterLoading && (
@@ -453,6 +467,17 @@ const SmartMovieMatching: React.FC<SmartMovieMatchingProps> = ({ session, member
           onError={() => setIsPosterLoading(false)}
           style={{ display: isPosterLoading ? 'none' : 'block' }}
         />
+        
+        {/* Why Button - Top Right Corner */}
+        {algorithmEnabled && matchingSessionId && otherMemberId && (
+          <button
+            className="why-button"
+            onClick={() => setShowExplanation(true)}
+            title="Why was this movie recommended?"
+          >
+            🤔 Why?
+          </button>
+        )}
         
         <div className="movie-info">
           <h2 className="movie-title">{currentMovie.title}</h2>
@@ -505,6 +530,15 @@ const SmartMovieMatching: React.FC<SmartMovieMatchingProps> = ({ session, member
             onClick={() => setShowPreferences(!showPreferences)}
           >
             {showPreferences ? 'Hide Preferences' : 'Show Taste Profiles'}
+          </button>
+        )}
+        
+        {algorithmEnabled && otherMemberId && (
+          <button
+            className="semantic-analysis-toggle"
+            onClick={() => setShowSemanticAnalysis(!showSemanticAnalysis)}
+          >
+            {showSemanticAnalysis ? 'Hide Deep Analysis' : 'Show Deep Analysis'}
           </button>
         )}
         
@@ -610,6 +644,19 @@ const SmartMovieMatching: React.FC<SmartMovieMatchingProps> = ({ session, member
         <div className="processing-overlay">
           <div className="loading-spinner"></div>
         </div>
+      )}
+
+      {/* Recommendation Explanation Modal */}
+      {showExplanation && currentMovie && algorithmEnabled && matchingSessionId && otherMemberId && (
+        <RecommendationExplanation
+          sessionId={matchingSessionId}
+          movieId={currentMovie.id}
+          user1Id={memberId}
+          user2Id={otherMemberId}
+          user1Name="You"
+          user2Name="Partner"
+          onClose={() => setShowExplanation(false)}
+        />
       )}
     </div>
   );

@@ -9,6 +9,7 @@ import json
 
 from ..database import get_db
 from ..tools.embedding_analyzer import EmbeddingAnalyzer
+from ..tools.semantic_analyzer import SemanticAnalyzer
 
 router = APIRouter(prefix="/api/embeddings", tags=["embeddings"])
 
@@ -62,7 +63,7 @@ def reduce_dimensions(
     return result
 
 @router.get("/analyze/outliers")
-def find_outliers(
+def analyze_outliers(
     threshold: float = Query(2.0, ge=1.0, le=5.0),
     db: Session = Depends(get_db)
 ):
@@ -105,43 +106,116 @@ def compare_movie_embeddings(
     return result
 
 @router.get("/analyze/report")
-def generate_report(db: Session = Depends(get_db)):
+def generate_interpretation_report(
+    db: Session = Depends(get_db)
+):
     """Generate a comprehensive embedding interpretation report."""
     analyzer = EmbeddingAnalyzer()
     result = analyzer.generate_interpretation_report(db)
+    
     return result
 
 @router.get("/visualization/data")
 def get_visualization_data(
     method: str = Query("pca", regex="^(pca|tsne)$"),
-    limit: int = Query(200, ge=10, le=1000),
+    limit: int = Query(100, ge=10, le=500),
     db: Session = Depends(get_db)
 ):
-    """Get data formatted for frontend visualization."""
+    """Get data for embedding visualization."""
     analyzer = EmbeddingAnalyzer()
     
-    # Get reduced dimensions
-    reduction_result = analyzer.reduce_dimensions(db, method=method, n_components=2)
+    # Get reduced dimensions for visualization
+    result = analyzer.reduce_dimensions(db, method=method, n_components=2)
     
-    if "error" in reduction_result:
-        raise HTTPException(status_code=404, detail=reduction_result["error"])
+    if "error" in result:
+        raise HTTPException(status_code=404, detail=result["error"])
     
-    # Limit movies for better performance
-    movies = reduction_result["movies"][:limit]
+    # Limit results if requested
+    if limit < len(result["movies"]):
+        result["movies"] = result["movies"][:limit]
+        result["limited"] = True
+        result["requested_limit"] = limit
     
-    # Group by primary genre for coloring
-    genre_groups = {}
-    for movie in movies:
-        primary_genre = movie["genres"][0] if movie["genres"] else "Unknown"
-        if primary_genre not in genre_groups:
-            genre_groups[primary_genre] = []
-        genre_groups[primary_genre].append(movie)
+    return result
+
+@router.get("/semantic/themes/user/{user_id}")
+def get_user_semantic_themes(
+    user_id: str,
+    db: Session = Depends(get_db)
+):
+    """Get semantic themes for a specific user based on their embedding preferences."""
+    analyzer = SemanticAnalyzer()
+    result = analyzer.analyze_user_semantic_preferences(db, user_id)
     
-    return {
-        "method": method,
-        "total_movies": len(movies),
-        "movies": movies,
-        "genre_groups": genre_groups,
-        "unique_genres": list(genre_groups.keys()),
-        "explained_variance": reduction_result.get("explained_variance_ratio", [])
-    } 
+    if "error" in result:
+        raise HTTPException(status_code=404, detail=result["error"])
+    
+    return result
+
+@router.get("/semantic/themes/movie/{movie_id}")
+def get_movie_semantic_themes(
+    movie_id: int,
+    db: Session = Depends(get_db)
+):
+    """Get semantic themes for a specific movie."""
+    analyzer = SemanticAnalyzer()
+    result = analyzer.analyze_movie_themes(db, movie_id)
+    
+    if "error" in result:
+        raise HTTPException(status_code=404, detail=result["error"])
+    
+    return result
+
+@router.get("/semantic/themes/compare")
+def compare_user_semantic_themes(
+    user1_id: str = Query(..., description="First user ID"),
+    user2_id: str = Query(..., description="Second user ID"),
+    db: Session = Depends(get_db)
+):
+    """Compare semantic themes between two users."""
+    analyzer = SemanticAnalyzer()
+    result = analyzer.compare_semantic_preferences(db, user1_id, user2_id)
+    
+    if "error" in result:
+        raise HTTPException(status_code=404, detail=result["error"])
+    
+    return result
+
+@router.get("/user/{user_id}")
+def analyze_user_embedding(
+    user_id: str,
+    db: Session = Depends(get_db)
+):
+    """Analyze a user's learned embedding preferences."""
+    analyzer = EmbeddingAnalyzer()
+    result = analyzer.analyze_user_embedding(db, user_id)
+    
+    if "error" in result:
+        raise HTTPException(status_code=404, detail=result["error"])
+    
+    return result
+
+@router.get("/compare/movies")
+def compare_movie_embeddings(
+    movie_id1: int = Query(..., description="First movie ID"),
+    movie_id2: int = Query(..., description="Second movie ID"),
+    db: Session = Depends(get_db)
+):
+    """Compare embeddings between two movies."""
+    analyzer = EmbeddingAnalyzer()
+    result = analyzer.compare_embeddings(db, movie_id1, movie_id2)
+    
+    if "error" in result:
+        raise HTTPException(status_code=404, detail=result["error"])
+    
+    return result
+
+@router.get("/report")
+def generate_interpretation_report(
+    db: Session = Depends(get_db)
+):
+    """Generate a comprehensive embedding interpretation report."""
+    analyzer = EmbeddingAnalyzer()
+    result = analyzer.generate_interpretation_report(db)
+    
+    return result 

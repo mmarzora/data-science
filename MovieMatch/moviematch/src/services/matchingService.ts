@@ -3,8 +3,7 @@
  */
 
 import { Movie } from './movieService';
-
-const API_BASE_URL = process.env.REACT_APP_BACKEND_URL || 'http://localhost:8000';
+import { API_BASE_URL } from '../config';
 
 export interface MatchingSession {
   session_id: string;
