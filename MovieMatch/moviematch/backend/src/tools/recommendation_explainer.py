@@ -11,9 +11,9 @@ from typing import Dict, List, Optional
 from sqlalchemy.orm import Session
 from collections import defaultdict
 
-from ..models import Movie, UserPreference, MatchingSession
+from ..models.models import Movie, UserPreference, MatchingSession
 from ..services.movie_service import movie_service
-from ..database import get_db
+from ..database.database import get_db
 
 class RecommendationExplainer:
     """Explains why movies were recommended to users."""

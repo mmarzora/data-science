@@ -1,22 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
-import { auth, db } from './firebase';
-import { onAuthStateChanged } from 'firebase/auth';
+import { db } from './firebase';
 import { collection, getDocs, enableNetwork, disableNetwork } from 'firebase/firestore';
 import SessionManager from './components/SessionManager';
 import MovieMatching from './components/MovieMatching';
 import SmartMovieMatching from './components/SmartMovieMatching';
 import { Session, sessionService } from './services/sessionService';
+import { v4 as uuidv4 } from 'uuid';
 
 function App() {
-  const [user, setUser] = useState<any>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [useSmartMatching, setUseSmartMatching] = useState(false);
   const [firebaseError, setFirebaseError] = useState<string | null>(null);
   const [isConnecting, setIsConnecting] = useState(true);
-  const [memberId, setMemberId] = useState<string>(() => 
-    localStorage.getItem('memberId') || ''
-  );
+  // Always generate a fresh user ID for each app session
+  const [memberId] = useState<string>(() => uuidv4());
 
   // Ref to store unsubscribe function for Firestore listener
   const unsubscribeRef = useRef<null | (() => void)>(null);
@@ -56,18 +54,6 @@ function App() {
     };
   }, []);
 
-  // Authentication listener
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user);
-      } else {
-        setUser(null);
-      }
-    });
-    return () => unsubscribe();
-  }, []);
-
   // Real-time Firestore session listener - Optimized to prevent duplicates
   useEffect(() => {
     // Clean up previous listener
@@ -103,11 +89,6 @@ function App() {
     console.log('Session started:', newSession, 'Smart matching:', smartMatchingEnabled);
     setSession(newSession);
     setUseSmartMatching(smartMatchingEnabled);
-    if (newSession.members.length > 0) {
-      const currentMemberId = newSession.members[newSession.members.length - 1];
-      setMemberId(currentMemberId);
-      localStorage.setItem('memberId', currentMemberId);
-    }
   };
 
   if (isConnecting) {
@@ -148,7 +129,7 @@ function App() {
             </button>
           </div>
         ) : !session ? (
-          <SessionManager onSessionStart={handleSessionStart} />
+          <SessionManager onSessionStart={handleSessionStart} memberId={memberId} />
         ) : (
           <div className="session-active">
             <div className="session-info">

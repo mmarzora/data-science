@@ -7,11 +7,11 @@ from sqlalchemy.orm import Session
 from typing import Optional, List
 import json
 
-from ..database import get_db
-from ..tools.embedding_analyzer import EmbeddingAnalyzer
-from ..tools.semantic_analyzer import SemanticAnalyzer
+from ...database.database import get_db
+from ...tools.embedding_analyzer import EmbeddingAnalyzer
+from ...tools.semantic_analyzer import SemanticAnalyzer
 
-router = APIRouter(prefix="/api/embeddings", tags=["embeddings"])
+router = APIRouter(tags=["embeddings"])
 
 @router.get("/analyze/dimensions")
 def analyze_dimensions(

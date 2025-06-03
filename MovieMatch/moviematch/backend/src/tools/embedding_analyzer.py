@@ -23,9 +23,9 @@ import os
 # Set environment variable to avoid OpenMP issues on macOS
 os.environ['OMP_NUM_THREADS'] = '1'
 
-from ..models import Movie, UserPreference
+from ..models.models import Movie, UserPreference
 from ..services.movie_service import movie_service
-from ..database import get_db
+from ..database.database import get_db
 
 class EmbeddingAnalyzer:
     """Tool for analyzing and interpreting movie embeddings."""

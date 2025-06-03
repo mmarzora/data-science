@@ -7,8 +7,9 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from pydantic import BaseModel
 
-from ..database import get_db
-from ..services.matching_service import matching_service
+from ...database.database import get_db
+from ...services.matching_service import matching_service
+from ...models.models import MatchingSession, UserFeedback
 
 router = APIRouter()
 
@@ -62,7 +63,6 @@ def get_recommendations(
         movies = matching_service.get_recommendations(db, session_id, batch_size)
         
         # Get session info
-        from ..models import MatchingSession
         session = db.query(MatchingSession).filter(MatchingSession.id == session_id).first()
         if not session:
             raise HTTPException(status_code=404, detail="Session not found")
@@ -119,7 +119,6 @@ def get_session_stats(
 ):
     """Get session statistics."""
     try:
-        from ..models import MatchingSession, UserFeedback
         
         # Get session
         session = db.query(MatchingSession).filter(MatchingSession.id == session_id).first()

@@ -10,7 +10,7 @@ from pydantic_settings import BaseSettings
 BASE_DIR = Path(__file__).parent
 
 # Database directory
-DB_DIR = BASE_DIR.parent / "database"
+DB_DIR = BASE_DIR / "database"
 DB_DIR.mkdir(parents=True, exist_ok=True)  # Ensure directory exists
 DB_PATH = DB_DIR / "movies.db"
 

@@ -6,9 +6,9 @@ from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
-from ..database import get_db
-from ..services.movie_service import movie_service
-from ..schemas.movie import MovieResponse, MovieList
+from ...database.database import get_db
+from ...services.movie_service import movie_service
+from ...schemas.movie import MovieResponse, MovieList
 
 router = APIRouter()
 

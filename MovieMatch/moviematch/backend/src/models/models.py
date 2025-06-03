@@ -67,7 +67,7 @@ class MatchingSession(Base):
     user1_id = Column(String, nullable=False)  # Firebase user ID
     user2_id = Column(String, nullable=False)  # Firebase user ID
     session_preferences = Column(String)  # JSON of learned session preferences
-    embedding_center = Column(LargeBinary)  # Current session preference center
+    # embedding_center = Column(LargeBinary)  # Current session preference center
     total_interactions = Column(Integer, default=0)
     mutual_likes = Column(Integer, default=0)  # Movies both users liked
     session_stage = Column(String, default="exploration")  # exploration, learning, convergence

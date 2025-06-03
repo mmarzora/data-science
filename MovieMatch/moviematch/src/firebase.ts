@@ -1,16 +1,25 @@
+// IMPORTANT: Set your Firebase config values in a .env file at the project root.
+// Example .env:
+// REACT_APP_FIREBASE_API_KEY=your_api_key
+// REACT_APP_FIREBASE_AUTH_DOMAIN=your_auth_domain
+// REACT_APP_FIREBASE_PROJECT_ID=your_project_id
+// REACT_APP_FIREBASE_STORAGE_BUCKET=your_storage_bucket
+// REACT_APP_FIREBASE_MESSAGING_SENDER_ID=your_messaging_sender_id
+// REACT_APP_FIREBASE_APP_ID=your_app_id
+
 import { initializeApp } from 'firebase/app';
 import { getFirestore, enableIndexedDbPersistence } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { getStorage } from 'firebase/storage';
 
-// Your web app's Firebase configuration
+// Load Firebase config from environment variables
 const firebaseConfig = {
-    apiKey: "AIzaSyDOKm1NK5bg2ssvdYhyYV-mLhoyuknaH9I",
-    authDomain: "movie-match-16db7.firebaseapp.com",
-    projectId: "movie-match-16db7",
-    storageBucket: "movie-match-16db7.appspot.com",
-    messagingSenderId: "1086358558339",
-    appId: "1:1086358558339:web:55a8dd53aa94d1f6d52db6"
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY || '',
+    authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN || '',
+    projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID || '',
+    storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET || '',
+    messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID || '',
+    appId: process.env.REACT_APP_FIREBASE_APP_ID || ''
 };
 
 console.log('Initializing Firebase with config:', { ...firebaseConfig, apiKey: '[HIDDEN]' });

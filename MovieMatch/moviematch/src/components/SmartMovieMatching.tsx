@@ -4,7 +4,6 @@ import { sessionService, Session } from '../services/sessionService';
 import { 
   matchingService, 
   RecommendationsResponse, 
-  SessionStats,
   UserPreferences 
 } from '../services/matchingService';
 import { movieService } from '../services/movieService';
@@ -41,9 +40,9 @@ const SmartMovieMatching: React.FC<SmartMovieMatchingProps> = ({ session, member
   // Algorithm-specific states
   const [matchingSessionId, setMatchingSessionId] = useState<string | null>(null);
   const [algorithmState, setAlgorithmState] = useState<RecommendationsResponse | null>(null);
-  const [sessionStats, setSessionStats] = useState<SessionStats | null>(null);
   const [userPreferences, setUserPreferences] = useState<UserPreferences | null>(null);
   const [algorithmEnabled, setAlgorithmEnabled] = useState(false);
+  const [isInitializingSession, setIsInitializingSession] = useState(false);
 
   const otherMemberId = useMemo(() => 
     session.members.find(id => id !== memberId),
@@ -76,22 +75,93 @@ const SmartMovieMatching: React.FC<SmartMovieMatchingProps> = ({ session, member
   // Initialize matching session when both users are present
   useEffect(() => {
     const initializeMatchingSession = async () => {
-      if (!otherMemberId || matchingSessionId) return;
+      // Only proceed if we have both users and no session yet
+      if (!otherMemberId || isInitializingSession) {
+        return;
+      }
+
+      console.log('[SessionInit] Checking session state:', {
+        otherMemberId: !!otherMemberId,
+        sessionMatchingId: session.matchingSessionId,
+        localMatchingId: matchingSessionId,
+        members: session.members.length
+      });
+
+      // If the session already has a matching session ID, use it
+      if (session.matchingSessionId && !matchingSessionId) {
+        console.log('[SessionInit] Using existing matching session from Firebase:', session.matchingSessionId);
+        setMatchingSessionId(session.matchingSessionId);
+        setAlgorithmEnabled(true);
+        return;
+      }
+
+      // If we already have a local matching session ID, we're done
+      if (matchingSessionId) {
+        return;
+      }
+
+      // Ensure both users are in the Firebase session
+      if (!session.members.includes(memberId) || !session.members.includes(otherMemberId)) {
+        console.log('[SessionInit] Waiting for both users to be in Firebase session');
+        return;
+      }
+
+      // Create a new matching session and try to set it atomically in Firebase
+      setIsInitializingSession(true);
 
       try {
-        console.log('Initializing matching session...');
+        console.log('[SessionInit] Creating new matching session for:', memberId, 'and', otherMemberId);
         const response = await matchingService.createSession(memberId, otherMemberId);
-        setMatchingSessionId(response.session_id);
-        setAlgorithmEnabled(true);
-        console.log('Matching session created:', response.session_id);
+        const newMatchingSessionId = response.session_id;
+        console.log('[SessionInit] Created matching session:', newMatchingSessionId);
+        
+        // Try to set it in Firebase atomically
+        await sessionService.setMatchingSessionIdIfAbsent(session.id, newMatchingSessionId);
+        
+        // The session update listener will pick up the change and set our local state
+        // Don't set local state here to avoid race conditions
+        
       } catch (error: any) {
-        console.warn('Algorithm not available, falling back to random movies:', error.message);
-        setAlgorithmEnabled(false);
+        console.warn('[SessionInit] Algorithm not available, falling back to random movies:', error.message);
+        if (mountedRef.current) {
+          setAlgorithmEnabled(false);
+          setLoading(false);
+        }
+      } finally {
+        if (mountedRef.current) {
+          setIsInitializingSession(false);
+        }
       }
     };
 
     initializeMatchingSession();
-  }, [memberId, otherMemberId, matchingSessionId]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [memberId, otherMemberId, session.matchingSessionId, matchingSessionId, isInitializingSession, session.members, session.id]);
+
+  // Listen for changes to the Firebase session (including matchingSessionId)
+  useEffect(() => {
+    if (session.matchingSessionId && session.matchingSessionId !== matchingSessionId) {
+      console.log('[SessionInit] Syncing matching session ID from Firebase:', session.matchingSessionId);
+      setMatchingSessionId(session.matchingSessionId);
+      setAlgorithmEnabled(true);
+    }
+  }, [session.matchingSessionId, matchingSessionId]);
+
+  // Timeout fallback - if still loading after 15 seconds, fall back to random movies
+  useEffect(() => {
+    if (loading) {
+      const timeout = setTimeout(() => {
+        if (mountedRef.current && loading) {
+          console.log('[SessionInit] Loading timeout reached, falling back to random movies');
+          setAlgorithmEnabled(false);
+          setLoading(false);
+          setError('Algorithm unavailable - using random movie selection');
+        }
+      }, 15000);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [loading, algorithmEnabled]);
 
   // Load initial recommendations - Memoized to reduce re-renders
   const loadRecommendations = useCallback(async () => {
@@ -133,18 +203,9 @@ const SmartMovieMatching: React.FC<SmartMovieMatchingProps> = ({ session, member
 
     const loadStats = async () => {
       try {
-        const stats = await matchingService.getSessionStats(matchingSessionId);
         const prefs = await matchingService.getUserPreferences(memberId);
         
         if (mountedRef.current) {
-          // Only update if data has actually changed to prevent unnecessary re-renders
-          setSessionStats(prevStats => {
-            if (JSON.stringify(prevStats) !== JSON.stringify(stats)) {
-              return stats;
-            }
-            return prevStats;
-          });
-          
           setUserPreferences(prevPrefs => {
             if (JSON.stringify(prevPrefs) !== JSON.stringify(prefs)) {
               return prefs;
@@ -153,7 +214,7 @@ const SmartMovieMatching: React.FC<SmartMovieMatchingProps> = ({ session, member
           });
         }
       } catch (error) {
-        console.error('Failed to load stats:', error);
+        console.error('Failed to load user preferences:', error);
       }
     };
 
@@ -171,18 +232,23 @@ const SmartMovieMatching: React.FC<SmartMovieMatchingProps> = ({ session, member
     const timeSpent = Date.now() - swipeStartTimeRef.current;
 
     try {
-      // Submit to Firebase (existing functionality)
+      // Submit to Firebase first
       await sessionService.updateMovieSwipe(session.id, memberId, movieId, liked);
 
       // Submit to algorithm if enabled
       if (matchingSessionId && algorithmEnabled) {
         const feedbackType = liked ? 'like' : 'dislike';
-        await matchingService.submitFeedback(matchingSessionId, {
-          user_id: memberId,
-          movie_id: movieId,
-          feedback_type: feedbackType,
-          time_spent_ms: timeSpent
-        });
+        try {
+          await matchingService.submitFeedback(matchingSessionId, {
+            user_id: memberId,
+            movie_id: movieId,
+            feedback_type: feedbackType,
+            time_spent_ms: timeSpent
+          });
+        } catch (algorithmError) {
+          console.error('[Algorithm] Failed to submit feedback:', algorithmError);
+          // Don't throw here - let Firebase save continue even if algorithm fails
+        }
 
         // Load fresh recommendations after feedback
         setTimeout(() => {
@@ -195,13 +261,9 @@ const SmartMovieMatching: React.FC<SmartMovieMatchingProps> = ({ session, member
       const nextIndex = currentIndex + 1;
       
       if (nextIndex < movieQueue.length) {
-        console.log('[setCurrentMovie] Advancing to next movie in queue:', movieQueue[nextIndex]);
         setCurrentMovie(movieQueue[nextIndex]);
       } else {
-        // No more movies in queue, set to null and wait for new recommendations
-        console.log('[setCurrentMovie] No more movies in queue, setting to null');
         setCurrentMovie(null);
-        // Load more recommendations
         await loadRecommendations();
       }
 
@@ -214,7 +276,7 @@ const SmartMovieMatching: React.FC<SmartMovieMatchingProps> = ({ session, member
   }, [
     isProcessingSwipe, 
     currentMovie, 
-    session.id, 
+    session.id,
     memberId, 
     matchingSessionId, 
     algorithmEnabled,

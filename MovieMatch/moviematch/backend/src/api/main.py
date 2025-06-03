@@ -1,62 +1,108 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
-from typing import List, Optional
+import sqlite3
 import json
-from pathlib import Path
-import sys
-
-# Add parent directory to path to import modules
-root_dir = Path(__file__).parent.parent.parent
-sys.path.append(str(root_dir))
-
-from src.services.movie_service import MovieService
-from src.models.movie import Movie, MovieResponse
+import uuid
+from typing import List, Optional, Dict
 from pydantic import BaseModel
+import os
+import sys
+from pathlib import Path
+import logging
+from dotenv import load_dotenv
+from datetime import datetime
+from .routes import matching, movies, embedding_analysis
+from ..database.database import init_db
+from ..config import settings
 
-app = FastAPI()
-movie_service = MovieService()
+# Load environment variables
+load_dotenv()
 
-# Configure CORS
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+app = FastAPI(title="MovieMatch API")
+
+# Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=["http://localhost:3000"],  # Specific to frontend
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+# Database path - pointing to the populated database with genre names
+DB_PATH = Path(__file__).parent.parent / "database" / "movies.db"
+logger.info(f"API using database at: {DB_PATH}")
+logger.info(f"Database exists: {DB_PATH.exists()}")
+
+class Movie(BaseModel):
+    id: int
+    title: str
+    description: Optional[str] = None
+    release_year: Optional[int] = None
+    poster_url: Optional[str] = None
+    genres: List[str] = []  # Will be stored as JSON in DB
+    runtime_minutes: Optional[int] = None
+    rating: Optional[float] = None  # REAL in DB
+    watchmode_id: Optional[str] = None  # TEXT in DB
+    created_at: Optional[datetime] = None
+    updated_at: Optional[datetime] = None
+
 class MovieList(BaseModel):
-    movies: List[MovieResponse]
+    movies: List[Movie]
 
-@app.get("/api/movies/random", response_model=MovieList)
-async def get_random_movies(limit: int = 20, year_start: Optional[int] = None, minRating: Optional[float] = None):
-    """Get random movies with optional filters."""
-    try:
-        movies = movie_service.get_random_movies(limit, year_start, minRating)
-        return {"movies": movies}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+class MovieSimilarity(BaseModel):
+    id: int
+    title: str
+    rating: Optional[float] = None  # Changed to float to match DB
+    release_year: Optional[int] = None
+    similarity: float
 
-@app.get("/api/movies/{movie_id}", response_model=MovieResponse)
-async def get_movie(movie_id: int):
-    """Get a specific movie by ID."""
-    try:
-        movie = movie_service.get_movie(movie_id)
-        if not movie:
-            raise HTTPException(status_code=404, detail="Movie not found")
-        return movie
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+class CreateSessionRequest(BaseModel):
+    user1_id: str
+    user2_id: str
 
-@app.get("/api/movies/{movie_id}/similar", response_model=MovieList)
-async def get_similar_movies(movie_id: int, limit: int = 10):
-    """Get similar movies based on embedding similarity."""
-    try:
-        similar_movies = movie_service.get_similar_movies(movie_id, limit)
-        return {"movies": similar_movies}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+class CreateSessionResponse(BaseModel):
+    session_id: str
+
+class FeedbackRequest(BaseModel):
+    user_id: str
+    movie_id: int
+    feedback_type: str  # 'like', 'dislike', 'skip'
+    time_spent_ms: Optional[int] = None
+
+class FeedbackResponse(BaseModel):
+    success: bool
+    message: str
+
+app.include_router(matching.router, prefix="/api/matching")
+app.include_router(movies.router, prefix="/api/movies")
+app.include_router(embedding_analysis.router, prefix="/api/embeddings")
+
+@app.get("/")
+async def root():
+    """Root endpoint."""
+    return {"message": "MovieMatch API is running"}
+
+@app.get("/health")
+async def health_check():
+    """Health check endpoint."""
+    return {"status": "healthy", "service": "moviematch-backend"}
+
+# Initialize database on startup
+@app.on_event("startup")
+async def startup_event():
+    """Initialize database on startup."""
+    init_db()
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="127.0.0.1", port=8000) 
+    uvicorn.run(
+        "src.backend.main:app",
+        host="127.0.0.1",
+        port=8000,
+        reload=settings.DEBUG
+    ) 

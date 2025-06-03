@@ -11,7 +11,7 @@ from sqlalchemy.orm import Session
 from sqlalchemy.sql import func
 from collections import defaultdict
 
-from ..models import Movie, UserPreference, MatchingSession, UserFeedback
+from ..models.models import Movie, UserPreference, MatchingSession, UserFeedback
 from .movie_service import movie_service
 
 class MatchingService:

@@ -26,5 +26,5 @@
   },
   "include": [
     "src"
-  ]
+, "backend/src/database/populate_db.ts", "backend/src/database/populate_db.js"  ]
 }

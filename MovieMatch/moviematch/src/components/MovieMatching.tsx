@@ -1,8 +1,6 @@
-import React, { useEffect, useState, useCallback, useMemo, useRef } from 'react';
-import { movieService, Movie } from '../services/movieService';
-import { sessionService, Session, UserSwipeHistory } from '../services/sessionService';
-import { doc, getDoc } from 'firebase/firestore';
-import { db } from '../firebase';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
+import { Movie, movieService } from '../services/movieService';
+import { sessionService, Session } from '../services/sessionService';
 import UserHistory from './UserHistory';
 import './MovieMatching.css';
 
@@ -15,10 +13,6 @@ interface ExtendedMovie extends Movie {
   year?: number;    // For backward compatibility
 }
 
-interface MovieResponse {
-  movies: Movie[];
-}
-
 interface MovieMatchingProps {
   session: Session;
   memberId: string;
@@ -26,9 +20,9 @@ interface MovieMatchingProps {
 
 const MovieMatching: React.FC<MovieMatchingProps> = ({ session, memberId }) => {
   // Refs for state management
-  const mountedRef = useRef(true);
-  const processingRef = useRef(false);
-  const lastFetchRef = useRef<number>(0);
+  const mountedRef = React.useRef(true);
+  const processingRef = React.useRef(false);
+  const lastFetchRef = React.useRef<number>(0);
   
   // States
   const [currentMovie, setCurrentMovie] = useState<ExtendedMovie | null>(null);
@@ -187,7 +181,7 @@ const MovieMatching: React.FC<MovieMatchingProps> = ({ session, memberId }) => {
     };
 
     checkForNewMatches();
-  }, [session.matches, session.userHistory, memberId, otherMemberId, moviesCache, updateMovieCache]);
+  }, [session.matches, session.userHistory, memberId, otherMemberId, moviesCache, updateMovieCache, processedMatches]);
 
   const getNextMovie = useCallback(async (excludeMovieId?: number): Promise<ExtendedMovie | null> => {
     try {

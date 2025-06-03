@@ -59,12 +59,21 @@ const SemanticPreferencesComparison: React.FC<SemanticPreferencesComparisonProps
         setLoading(true);
         setError(null);
 
+        console.log('[SemanticPreferencesComparison] Loading semantic preferences for:');
+        console.log('  - User 1 ID:', user1Id);
+        console.log('  - User 2 ID:', user2Id);
+
         // Load individual user semantic preferences
         const [user1Response, user2Response, comparisonResponse] = await Promise.all([
           fetch(`${API_BASE_URL}/api/embeddings/semantic/themes/user/${user1Id}`),
           fetch(`${API_BASE_URL}/api/embeddings/semantic/themes/user/${user2Id}`),
           fetch(`${API_BASE_URL}/api/embeddings/semantic/themes/compare?user1_id=${user1Id}&user2_id=${user2Id}`)
         ]);
+
+        console.log('[SemanticPreferencesComparison] Response status:');
+        console.log('  - User 1 response:', user1Response.status, user1Response.statusText);
+        console.log('  - User 2 response:', user2Response.status, user2Response.statusText);
+        console.log('  - Comparison response:', comparisonResponse.status, comparisonResponse.statusText);
 
         if (!user1Response.ok || !user2Response.ok || !comparisonResponse.ok) {
           throw new Error('Failed to fetch semantic preferences');
@@ -75,6 +84,13 @@ const SemanticPreferencesComparison: React.FC<SemanticPreferencesComparisonProps
           user2Response.json(),
           comparisonResponse.json()
         ]);
+
+        console.log('[SemanticPreferencesComparison] Loaded data:');
+        console.log('  - User 1 themes count:', user1Result.top_themes?.length || 0);
+        console.log('  - User 2 themes count:', user2Result.top_themes?.length || 0);
+        console.log('  - User 1 confidence:', user1Result.confidence_score);
+        console.log('  - User 2 confidence:', user2Result.confidence_score);
+        console.log('  - Comparison compatibility:', comparisonResult.semantic_compatibility);
 
         setUser1Data(user1Result);
         setUser2Data(user2Result);
@@ -88,10 +104,6 @@ const SemanticPreferencesComparison: React.FC<SemanticPreferencesComparisonProps
     };
 
     loadSemanticPreferences();
-    
-    // Update every 45 seconds (less frequent since semantic analysis is more expensive)
-    const interval = setInterval(loadSemanticPreferences, 45000);
-    return () => clearInterval(interval);
   }, [user1Id, user2Id]);
 
   const formatThemeName = (themeKey: string) => {

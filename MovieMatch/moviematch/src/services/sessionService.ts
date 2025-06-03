@@ -1,18 +1,15 @@
 import { db } from '../firebase';
 import { 
-  collection, 
   doc, 
   setDoc, 
   getDoc, 
   updateDoc, 
   onSnapshot,
   serverTimestamp,
-  query,
-  where,
-  getDocs,
   arrayUnion,
   writeBatch,
-  Timestamp
+  Timestamp,
+  runTransaction
 } from 'firebase/firestore';
 import { generateSessionCode } from '../utils/sessionUtils';
 
@@ -39,6 +36,8 @@ export interface Session {
   userHistory: {
     [memberId: string]: UserSwipeHistory[];
   };
+  matchingSessionId?: string; // For shared algorithm session across browsers
+  useSmartMatching: boolean; // Flag to indicate if smart matching is enabled
 }
 
 export const sessionService = {
@@ -59,7 +58,8 @@ export const sessionService = {
         matches: [],
         userHistory: {
           [creatorId]: []
-        }
+        },
+        useSmartMatching: true // Default to true for new sessions
       };
 
       await setDoc(sessionRef, sessionData);
@@ -251,5 +251,28 @@ export const sessionService = {
 
     const sessionData = snapshot.data() as Session;
     return sessionData.userHistory[memberId] || [];
+  },
+
+  // Set matching session ID atomically if absent
+  setMatchingSessionIdIfAbsent: async (sessionId: string, matchingSessionId: string): Promise<void> => {
+    const sessionRef = doc(db, 'sessions', sessionId);
+    
+    await runTransaction(db, async (transaction) => {
+      const sessionDoc = await transaction.get(sessionRef);
+      
+      if (!sessionDoc.exists()) {
+        throw new Error('Session not found');
+      }
+      
+      const sessionData = sessionDoc.data() as Session;
+      
+      // Only set if not already present (atomic check-and-set)
+      if (!sessionData.matchingSessionId) {
+        transaction.update(sessionRef, { matchingSessionId });
+        console.log('[SessionService] Set matching session ID:', matchingSessionId);
+      } else {
+        console.log('[SessionService] Matching session ID already exists:', sessionData.matchingSessionId);
+      }
+    });
   }
 }; 

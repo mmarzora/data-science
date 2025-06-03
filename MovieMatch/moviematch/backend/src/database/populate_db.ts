@@ -1,9 +1,13 @@
-import db from './db';
+import Database from 'better-sqlite3';
 import dotenv from 'dotenv';
 import axios from 'axios';
+import { join } from 'path';
 
 // Load environment variables
 dotenv.config();
+
+// Create database connection
+const db = new Database(join(__dirname, 'movies.db'));
 
 interface Movie {
   id: number;

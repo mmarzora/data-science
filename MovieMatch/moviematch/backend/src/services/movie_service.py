@@ -1,112 +1,117 @@
-from typing import List, Optional
-import numpy as np
-from sentence_transformers import SentenceTransformer
 import json
-from pathlib import Path
+import numpy as np
+from typing import List, Optional
+from sqlalchemy.orm import Session
+from sqlalchemy.sql import func
+from sentence_transformers import SentenceTransformer
+import logging
 
-from src.models.movie import Movie, MovieResponse
-from src.database.db import get_db
+from ..models.models import Movie
+from ..config import settings
+# from ..database.db import get_db
 
 class MovieService:
+    """Service for movie-related operations."""
+    
     def __init__(self):
-        self.model = SentenceTransformer('all-MiniLM-L6-v2')
-
+        """Initialize the movie service."""
+        self.model = SentenceTransformer(settings.EMBEDDING_MODEL)
+    
     def get_movie_embedding(self, title: str, description: str, genres: List[str]) -> bytes:
         """Generate embedding for a movie based on its metadata."""
         text = f"{title} {description} {' '.join(genres)}"
         embedding = self.model.encode([text])[0]
         return embedding.tobytes()
-
+    
     def bytes_to_array(self, embedding_bytes: bytes) -> np.ndarray:
         """Convert bytes back to numpy array."""
         return np.frombuffer(embedding_bytes, dtype=np.float32)
-
-    def get_random_movies(self, limit: int = 20, year_start: Optional[int] = None, minRating: Optional[float] = None) -> List[MovieResponse]:
+    
+    def get_random_movies(
+        self, 
+        db: Session, 
+        limit: int = 20, 
+        year_start: Optional[int] = None,
+        min_rating: Optional[float] = None
+    ) -> List[dict]:
         """Get random movies with optional filters."""
-        query = "SELECT * FROM movies WHERE 1=1"
-        params = []
-        
+        logger = logging.getLogger(__name__)
+        # Log the database connection info
+        try:
+            db_bind = db.get_bind()
+            logger.info(f"SQLAlchemy DB bind: {db_bind}")
+        except Exception as e:
+            logger.warning(f"Could not get DB bind: {e}")
+        query = db.query(Movie)
+        logger.info(f"Initial movie count: {query.count()}")
         if year_start:
-            query += " AND release_year >= ?"
-            params.append(year_start)
-        
-        if minRating:
-            query += " AND rating >= ?"
-            params.append(minRating)
-        
-        query += " ORDER BY RANDOM() LIMIT ?"
-        params.append(limit)
-        
-        db = get_db()
-        cursor = db.cursor()
+            query = query.filter(Movie.release_year >= year_start)
+            logger.info(f"Applied year_start filter: {year_start}")
+        if min_rating:
+            query = query.filter(Movie.rating >= min_rating)
+            logger.info(f"Applied min_rating filter: {min_rating}")
+        # Log the SQL query being executed
         try:
-            cursor.execute(query, params)
-            movies = cursor.fetchall()
-            
-            # Convert rows to MovieResponse objects
-            result = []
-            for movie in movies:
-                movie_dict = dict(movie)
-                movie_dict['genres'] = json.loads(movie_dict['genres']) if movie_dict['genres'] else []
-                result.append(MovieResponse(**movie_dict))
-            
-            return result
-        finally:
-            db.close()
-
-    def get_movie(self, movie_id: int) -> Optional[MovieResponse]:
-        """Get a specific movie by ID."""
-        db = get_db()
-        cursor = db.cursor()
-        try:
-            cursor.execute("SELECT * FROM movies WHERE id = ?", (movie_id,))
-            movie = cursor.fetchone()
-            
-            if not movie:
-                return None
-            
-            movie_dict = dict(movie)
+            logger.info(f"SQL Query: {str(query.statement.compile(compile_kwargs={'literal_binds': True}))}")
+        except Exception as e:
+            logger.warning(f"Could not log SQL query: {e}")
+        # Get total count for random sampling
+        total = query.count()
+        logger.info(f"Filtered movie count: {total}")
+        if total == 0:
+            logger.warning("No movies found after applying filters.")
+            return []
+        # Get random movies
+        movies = query.order_by(func.random()).limit(limit).all()
+        logger.info(f"Returning {len(movies)} movies.")
+        # Convert to dictionaries and parse genres
+        result = []
+        for movie in movies:
+            movie_dict = movie.to_dict()
             movie_dict['genres'] = json.loads(movie_dict['genres']) if movie_dict['genres'] else []
-            return MovieResponse(**movie_dict)
-        finally:
-            db.close()
-
-    def get_similar_movies(self, movie_id: int, limit: int = 10) -> List[MovieResponse]:
+            result.append(movie_dict)
+        return result
+    
+    def get_movie(self, db: Session, movie_id: int) -> Optional[dict]:
+        """Get a specific movie by ID."""
+        movie = db.query(Movie).filter(Movie.id == movie_id).first()
+        if not movie:
+            return None
+            
+        movie_dict = movie.to_dict()
+        movie_dict['genres'] = json.loads(movie_dict['genres']) if movie_dict['genres'] else []
+        return movie_dict
+    
+    def get_similar_movies(self, db: Session, movie_id: int, limit: int = 5) -> List[dict]:
         """Get similar movies based on embedding similarity."""
-        db = get_db()
-        cursor = db.cursor()
-        try:
-            # Get the source movie's embedding
-            cursor.execute("SELECT embedding FROM movies WHERE id = ?", (movie_id,))
-            result = cursor.fetchone()
+        # Get source movie
+        source_movie = db.query(Movie).filter(Movie.id == movie_id).first()
+        if not source_movie or not source_movie.embedding:
+            return []
             
-            if not result:
-                return []
-            
-            source_embedding = self.bytes_to_array(result['embedding'])
-            
-            # Get all other movies' embeddings and calculate similarity
-            cursor.execute("""
-                SELECT id, title, description, release_year, poster_url, genres, 
-                       runtime_minutes, rating, embedding 
-                FROM movies 
-                WHERE id != ?
-            """, (movie_id,))
-            movies = cursor.fetchall()
-            
-            similarities = []
-            for movie in movies:
-                movie_dict = dict(movie)
-                movie_dict['genres'] = json.loads(movie_dict['genres']) if movie_dict['genres'] else []
+        source_embedding = self.bytes_to_array(source_movie.embedding)
+        
+        # Get all other movies
+        movies = db.query(Movie).filter(Movie.id != movie_id).all()
+        
+        # Calculate similarities
+        similarities = []
+        for movie in movies:
+            if not movie.embedding:
+                continue
                 
-                target_embedding = self.bytes_to_array(movie['embedding'])
-                similarity = np.dot(source_embedding, target_embedding) / (
-                    np.linalg.norm(source_embedding) * np.linalg.norm(target_embedding)
-                )
-                similarities.append((similarity, movie_dict))
+            movie_dict = movie.to_dict()
+            movie_dict['genres'] = json.loads(movie_dict['genres']) if movie_dict['genres'] else []
             
-            # Sort by similarity and return top N
-            similarities.sort(key=lambda x: x[0], reverse=True)
-            return [MovieResponse(**movie) for _, movie in similarities[:limit]]
-        finally:
-            db.close() 
+            target_embedding = self.bytes_to_array(movie.embedding)
+            similarity = np.dot(source_embedding, target_embedding) / (
+                np.linalg.norm(source_embedding) * np.linalg.norm(target_embedding)
+            )
+            similarities.append((similarity, movie_dict))
+        
+        # Sort by similarity and return top N
+        similarities.sort(key=lambda x: x[0], reverse=True)
+        return [movie for _, movie in similarities[:limit]]
+
+# Global service instance
+movie_service = MovieService() 

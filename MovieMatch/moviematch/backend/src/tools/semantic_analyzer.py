@@ -14,9 +14,9 @@ from sqlalchemy.orm import Session
 from collections import defaultdict, Counter
 import re
 
-from ..models import Movie, UserPreference
+from ..models.models import Movie, UserPreference
 from ..services.movie_service import movie_service
-from ..database import get_db
+from ..database.database import get_db
 
 class SemanticAnalyzer:
     """Analyzes movie embeddings to extract semantic themes."""

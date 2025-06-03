@@ -13,7 +13,7 @@ export interface MatchingSession {
 
 export interface RecommendationsResponse {
   movies: Movie[];
-  session_stage: 'exploration' | 'learning' | 'convergence';
+  session_stage: string;
   total_interactions: number;
   mutual_likes: number;
 }
@@ -45,8 +45,10 @@ export interface SessionStats {
 }
 
 export interface UserPreferences {
+  user_id: string;
   genre_preferences: { [genre: string]: number };
-  embedding_vector: number[] | null;
+  rating_threshold: number;
+  year_preference_start: number;
   confidence_score: number;
   total_interactions: number;
 }
@@ -75,11 +77,15 @@ class MatchingService {
    * Create a new matching session
    */
   async createSession(user1Id: string, user2Id: string): Promise<{ session_id: string }> {
+    // Sort user IDs alphabetically to ensure consistent session creation
+    // This prevents duplicate sessions when users join in different orders
+    const [sortedUser1, sortedUser2] = [user1Id, user2Id].sort();
+    
     return this.makeRequest<{ session_id: string }>('/api/matching/sessions', {
       method: 'POST',
       body: JSON.stringify({
-        user1_id: user1Id,
-        user2_id: user2Id,
+        user1_id: sortedUser1,
+        user2_id: sortedUser2,
       }),
     });
   }
@@ -88,7 +94,7 @@ class MatchingService {
    * Get movie recommendations for a session
    */
   async getRecommendations(
-    sessionId: string, 
+    sessionId: string,
     batchSize: number = 20
   ): Promise<RecommendationsResponse> {
     return this.makeRequest<RecommendationsResponse>(

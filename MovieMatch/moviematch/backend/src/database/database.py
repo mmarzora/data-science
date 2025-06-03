@@ -6,8 +6,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, Session
 from contextlib import contextmanager
 
-from .config import settings
-from .models import Base
+from ..config import settings
+from ..models.models import Base
 
 # Create SQLAlchemy engine
 engine = create_engine(

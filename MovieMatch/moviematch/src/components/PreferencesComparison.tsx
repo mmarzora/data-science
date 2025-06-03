@@ -26,10 +26,19 @@ const PreferencesComparison: React.FC<PreferencesComparisonProps> = ({
     const loadPreferences = async () => {
       try {
         setLoading(true);
+        
+        console.log('[PreferencesComparison] Loading preferences for:');
+        console.log('  - User 1 ID:', user1Id);
+        console.log('  - User 2 ID:', user2Id);
+        
         const [prefs1, prefs2] = await Promise.all([
           matchingService.getUserPreferences(user1Id),
           matchingService.getUserPreferences(user2Id)
         ]);
+        
+        console.log('[PreferencesComparison] Loaded preferences:');
+        console.log('  - User 1 preferences:', prefs1);
+        console.log('  - User 2 preferences:', prefs2);
         
         setUser1Prefs(prefs1);
         setUser2Prefs(prefs2);
@@ -193,7 +202,10 @@ const PreferencesComparison: React.FC<PreferencesComparisonProps> = ({
                 </div>
               ))
             ) : (
-              <p className="no-preferences">No preferences learned yet</p>
+              <div className="no-preferences">
+                <p>No preferences learned yet</p>
+                <small>Partner needs to like/dislike movies to build their taste profile</small>
+              </div>
             )}
           </div>
         </div>

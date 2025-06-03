@@ -1,21 +1,24 @@
 import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import SessionCreate from './SessionCreate';
 import SessionJoin from './SessionJoin';
 import { sessionService, Session } from '../services/sessionService';
 import { matchingService } from '../services/matchingService';
+import { doc, updateDoc } from 'firebase/firestore';
+import { db } from '../firebase';
 
 interface SessionManagerProps {
   onSessionStart: (session: Session, useSmartMatching: boolean) => void;
+  memberId: string;
 }
 
-const SessionManager: React.FC<SessionManagerProps> = ({ onSessionStart }) => {
-  const memberIdRef = useRef<string>(uuidv4());
+const SessionManager: React.FC<SessionManagerProps> = ({ onSessionStart, memberId }) => {
+  // Use the memberId passed from App.tsx instead of generating our own
+  const memberIdRef = useRef<string>(memberId);
+  
   const [sessionId, setSessionId] = useState<string | null>(null);
   const [sessionCode, setSessionCode] = useState<string | null>(null);
   const [currentSession, setCurrentSession] = useState<Session | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [error, setError] = useState<string | null>(null);
   const [useSmartMatching, setUseSmartMatching] = useState(true);
   const [algorithmAvailable, setAlgorithmAvailable] = useState<boolean | null>(null);
 
@@ -42,18 +45,25 @@ const SessionManager: React.FC<SessionManagerProps> = ({ onSessionStart }) => {
       setCurrentSession(prevSession => {
         // Deep comparison to avoid unnecessary updates
         if (JSON.stringify(prevSession) !== JSON.stringify(updatedSession)) {
+          // Update smart matching state from Firebase
+          setUseSmartMatching(updatedSession.useSmartMatching);
           return updatedSession;
         }
         return prevSession;
       });
       setSessionCode(updatedSession.code);
       
-      // Only call onSessionStart for initial session setup or member changes
-      if (!currentSession || currentSession.members.length !== updatedSession.members.length) {
-        onSessionStart(updatedSession, useSmartMatching && algorithmAvailable === true);
+      // Only call onSessionStart when we have 2 members (session is ready to start)
+      const wasSessionReady = currentSession?.members.length === 2;
+      const isSessionNowReady = updatedSession.members.length === 2;
+      
+      // Start the session only when it becomes ready (transitions from not ready to ready)
+      if (!wasSessionReady && isSessionNowReady) {
+        console.log('[SessionManager] Session now ready with 2 members, starting session');
+        onSessionStart(updatedSession, updatedSession.useSmartMatching);
       }
     }
-  }, [onSessionStart, useSmartMatching, algorithmAvailable, currentSession]);
+  }, [onSessionStart, currentSession]);
 
   useEffect(() => {
     if (!sessionId || !memberIdRef.current) return;
@@ -97,7 +107,6 @@ const SessionManager: React.FC<SessionManagerProps> = ({ onSessionStart }) => {
       handleSessionUpdate(session);
     } catch (err) {
       console.error('Manual refresh error:', err);
-      setError('Failed to refresh session.');
     } finally {
       setIsRefreshing(false);
     }
@@ -106,9 +115,12 @@ const SessionManager: React.FC<SessionManagerProps> = ({ onSessionStart }) => {
   const handleSmartMatchingToggle = useCallback((enabled: boolean) => {
     setUseSmartMatching(enabled);
     if (currentSession) {
-      onSessionStart(currentSession, enabled && algorithmAvailable === true);
+      // Update Firebase with new smart matching state
+      const sessionRef = doc(db, 'sessions', currentSession.code);
+      updateDoc(sessionRef, { useSmartMatching: enabled });
+      onSessionStart(currentSession, enabled);
     }
-  }, [currentSession, onSessionStart, algorithmAvailable]);
+  }, [currentSession, onSessionStart]);
 
   const otherMemberId = useMemo(() => 
     currentSession?.members.find(id => id !== memberIdRef.current),
@@ -141,19 +153,6 @@ const SessionManager: React.FC<SessionManagerProps> = ({ onSessionStart }) => {
       fontSize: '24px', 
       fontWeight: 'bold' as const,
       margin: '10px 0'
-    },
-    testButton: {
-      position: 'absolute' as const,
-      top: '10px',
-      right: '10px',
-      padding: '10px 20px',
-      backgroundColor: 'red',
-      color: 'white',
-      border: 'none',
-      borderRadius: '4px',
-      cursor: 'pointer',
-      zIndex: 9999,
-      fontWeight: 'bold' as const
     },
     refreshButton: {
       padding: '10px 20px',
@@ -240,9 +239,6 @@ const SessionManager: React.FC<SessionManagerProps> = ({ onSessionStart }) => {
     <div className="session-manager">
       <div className="session-code">
         <div style={sessionStyles.container}>
-          <button style={sessionStyles.testButton}>
-            Test Button
-          </button>
           <div style={sessionStyles.header}>
             <h2 style={{ margin: 0 }}>Your Session Code</h2>
             <button 
@@ -299,9 +295,6 @@ const SessionManager: React.FC<SessionManagerProps> = ({ onSessionStart }) => {
         </div>
         {currentSession && (
           <div className="session-status" style={{ position: 'relative' }}>
-            <button style={sessionStyles.testButton}>
-              Test Button
-            </button>
             <p className="members-count">
               Members in session: {currentSession.members.length}/2
             </p>
