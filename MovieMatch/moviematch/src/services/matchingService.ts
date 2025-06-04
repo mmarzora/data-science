@@ -95,10 +95,11 @@ class MatchingService {
    */
   async getRecommendations(
     sessionId: string,
-    batchSize: number = 20
+    batchSize: number = 20,
+    userId: string
   ): Promise<RecommendationsResponse> {
     return this.makeRequest<RecommendationsResponse>(
-      `/api/matching/sessions/${sessionId}/recommendations?batch_size=${batchSize}`
+      `/api/matching/sessions/${sessionId}/recommendations?batch_size=${batchSize}&user_id=${encodeURIComponent(userId)}`
     );
   }
 

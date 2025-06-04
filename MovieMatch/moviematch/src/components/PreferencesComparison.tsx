@@ -52,10 +52,6 @@ const PreferencesComparison: React.FC<PreferencesComparisonProps> = ({
     };
 
     loadPreferences();
-    
-    // Update every 30 seconds
-    const interval = setInterval(loadPreferences, 30000);
-    return () => clearInterval(interval);
   }, [user1Id, user2Id]);
 
   const getTopGenres = (preferences: { [genre: string]: number }, limit: number = 5) => {

@@ -14,6 +14,10 @@ from datetime import datetime
 from .routes import matching, movies, embedding_analysis
 from ..database.database import init_db
 from ..config import settings
+from ..tools.recommendation_explainer import RecommendationExplainer
+from sqlalchemy.orm import Session
+from fastapi import Depends
+from ..database.database import get_db
 
 # Load environment variables
 load_dotenv()
@@ -97,6 +101,31 @@ async def health_check():
 async def startup_event():
     """Initialize database on startup."""
     init_db()
+
+# Add explanation endpoint
+@app.get("/api/matching/explain/{session_id}/{movie_id}")
+async def explain_recommendation(
+    session_id: str,
+    movie_id: int,
+    user1_id: str = Query(..., description="First user ID"),
+    user2_id: str = Query(..., description="Second user ID"),
+    db: Session = Depends(get_db)
+):
+    """Get explanation for why a specific movie was recommended."""
+    try:
+        explainer = RecommendationExplainer()
+        explanation = explainer.explain_recommendation(
+            db, session_id, movie_id, user1_id, user2_id
+        )
+        
+        if "error" in explanation:
+            raise HTTPException(status_code=404, detail=explanation["error"])
+        
+        return explanation
+    except Exception as e:
+        logger.error(f"Error explaining recommendation: {e}")
+        raise HTTPException(status_code=500, detail=f"Failed to explain recommendation: {str(e)}")
+
 
 if __name__ == "__main__":
     import uvicorn

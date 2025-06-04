@@ -44,6 +44,9 @@ const SmartMovieMatching: React.FC<SmartMovieMatchingProps> = ({ session, member
   const [algorithmEnabled, setAlgorithmEnabled] = useState(false);
   const [isInitializingSession, setIsInitializingSession] = useState(false);
 
+  // Lock to prevent multiple matching session creations per session
+  const creationInProgressRef = useRef<{ [sessionId: string]: boolean }>({});
+
   const otherMemberId = useMemo(() => 
     session.members.find(id => id !== memberId),
     [session.members, memberId]
@@ -75,6 +78,15 @@ const SmartMovieMatching: React.FC<SmartMovieMatchingProps> = ({ session, member
   // Initialize matching session when both users are present
   useEffect(() => {
     const initializeMatchingSession = async () => {
+      // Debounce: If Firestore already has a matchingSessionId, do not create a new one
+      if (session.matchingSessionId) {
+        // If our local state is not set, sync it
+        if (!matchingSessionId) {
+          setMatchingSessionId(session.matchingSessionId);
+          setAlgorithmEnabled(true);
+        }
+        return;
+      }
       // Only proceed if we have both users and no session yet
       if (!otherMemberId || isInitializingSession) {
         return;
@@ -106,11 +118,24 @@ const SmartMovieMatching: React.FC<SmartMovieMatchingProps> = ({ session, member
         return;
       }
 
-      // Create a new matching session and try to set it atomically in Firebase
+      // Only the leader (smallest user ID) should create the matching session
+      const [leaderId, followerId] = [memberId, otherMemberId].sort();
+      if (memberId !== leaderId) {
+        // Not the leader, just wait for Firestore to update
+        return;
+      }
+
+      // Prevent multiple creations for the same session
+      if (creationInProgressRef.current[session.id]) {
+        // Already creating a session for this session.id
+        return;
+      }
+      creationInProgressRef.current[session.id] = true;
+
       setIsInitializingSession(true);
 
       try {
-        console.log('[SessionInit] Creating new matching session for:', memberId, 'and', otherMemberId);
+        console.log('[SessionInit] (Leader) Creating new matching session for:', memberId, 'and', otherMemberId);
         const response = await matchingService.createSession(memberId, otherMemberId);
         const newMatchingSessionId = response.session_id;
         console.log('[SessionInit] Created matching session:', newMatchingSessionId);
@@ -169,7 +194,7 @@ const SmartMovieMatching: React.FC<SmartMovieMatchingProps> = ({ session, member
 
     try {
       setLoading(true);
-      const recommendations = await matchingService.getRecommendations(matchingSessionId, 10);
+      const recommendations = await matchingService.getRecommendations(matchingSessionId, 10, memberId);
       
       if (mountedRef.current) {
         setAlgorithmState(recommendations);
@@ -188,7 +213,7 @@ const SmartMovieMatching: React.FC<SmartMovieMatchingProps> = ({ session, member
         setLoading(false);
       }
     }
-  }, [matchingSessionId, currentMovie]);
+  }, [matchingSessionId, currentMovie, memberId]);
 
   // Load recommendations when session is ready
   useEffect(() => {
@@ -344,7 +369,7 @@ const SmartMovieMatching: React.FC<SmartMovieMatchingProps> = ({ session, member
         // If not found in queue, try to fetch from algorithm recommendations if available
         if (!matchedMovie && matchingSessionId) {
           try {
-            const recommendations = await matchingService.getRecommendations(matchingSessionId, 50);
+            const recommendations = await matchingService.getRecommendations(matchingSessionId, 50, memberId);
             matchedMovie = recommendations.movies.find(m => m.id === latestMatchId);
           } catch (error) {
             console.warn('Could not fetch from algorithm:', error);

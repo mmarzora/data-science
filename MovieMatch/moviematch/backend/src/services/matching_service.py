@@ -52,9 +52,10 @@ class MatchingService:
         self, 
         db: Session, 
         session_id: str, 
+        user_id: str,
         batch_size: int = 20
     ) -> List[Dict]:
-        """Get movie recommendations for a session."""
+        """Get movie recommendations for a session and user."""
         
         # Get session data
         session = db.query(MatchingSession).filter(MatchingSession.id == session_id).first()
@@ -68,8 +69,8 @@ class MatchingService:
         # Determine session parameters based on stage
         stage_params = self._get_stage_parameters(session)
         
-        # Generate candidates
-        candidates = self._generate_candidates(db, session, user1_prefs, user2_prefs)
+        # Generate candidates for the requesting user
+        candidates = self._generate_candidates(db, session, user1_prefs, user2_prefs, user_id)
         
         # Score candidates using hybrid approach
         scored_movies = self._score_movies(
@@ -175,32 +176,28 @@ class MatchingService:
         db: Session, 
         session: MatchingSession,
         user1_prefs: Dict, 
-        user2_prefs: Dict
+        user2_prefs: Dict,
+        current_user_id: str
     ) -> List[Movie]:
-        """Generate candidate movies for scoring."""
-        
-        # Get recently shown movies to avoid repeats
+        """Generate candidate movies for scoring for the requesting user only."""
+        # Get recently shown movies to avoid repeats (for this user only)
         recent_feedback = db.query(UserFeedback).filter(
-            UserFeedback.session_id == session.id
+            UserFeedback.session_id == session.id,
+            UserFeedback.user_id == current_user_id
         ).order_by(UserFeedback.created_at.desc()).limit(50).all()
-        
         recent_movie_ids = {f.movie_id for f in recent_feedback}
-        
         # Start with a broad candidate pool
         query = db.query(Movie).filter(
             Movie.embedding.isnot(None),
             ~Movie.id.in_(recent_movie_ids)
         )
-        
         # Apply basic quality filters
         query = query.filter(
             Movie.rating >= 6.0,
             Movie.release_year >= 1990
         )
-        
         # Get candidates (limit to reasonable number for scoring)
         candidates = query.limit(1000).all()
-        
         return candidates
     
     def _score_movies(

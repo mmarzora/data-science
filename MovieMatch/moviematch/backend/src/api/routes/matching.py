@@ -54,13 +54,14 @@ def create_session(
 @router.get("/sessions/{session_id}/recommendations", response_model=GetRecommendationsResponse)
 def get_recommendations(
     session_id: str,
+    user_id: str,
     batch_size: int = 20,
     db: Session = Depends(get_db)
 ):
-    """Get movie recommendations for a session."""
+    """Get movie recommendations for a session and user."""
     try:
-        # Get recommendations
-        movies = matching_service.get_recommendations(db, session_id, batch_size)
+        # Get recommendations for the requesting user
+        movies = matching_service.get_recommendations(db, session_id, user_id, batch_size)
         
         # Get session info
         session = db.query(MatchingSession).filter(MatchingSession.id == session_id).first()
