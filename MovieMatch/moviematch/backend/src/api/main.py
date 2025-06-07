@@ -31,7 +31,7 @@ app = FastAPI(title="MovieMatch API")
 # Add CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],  # Specific to frontend
+    allow_origins=["http://localhost:3000", "http://localhost:8080", "file://"],  # Allow both React dev and local HTML server
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

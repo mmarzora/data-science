@@ -4,7 +4,7 @@ const path = require('path');
 const dotenv = require('dotenv');
 
 // Load environment variables from the correct path
-const envPath = path.join(__dirname, '../../.env');
+const envPath = path.join(__dirname, '../../../.env');
 console.log('Loading .env from:', envPath);
 dotenv.config({ path: envPath });
 

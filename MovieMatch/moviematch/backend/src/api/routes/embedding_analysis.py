@@ -125,16 +125,29 @@ def get_visualization_data(
     analyzer = EmbeddingAnalyzer()
     
     # Get reduced dimensions for visualization
-    result = analyzer.reduce_dimensions(db, method=method, n_components=2)
+    reduction_result = analyzer.reduce_dimensions(db, method=method, n_components=2)
     
-    if "error" in result:
-        raise HTTPException(status_code=404, detail=result["error"])
+    if "error" in reduction_result:
+        raise HTTPException(status_code=404, detail=reduction_result["error"])
     
-    # Limit results if requested
-    if limit < len(result["movies"]):
-        result["movies"] = result["movies"][:limit]
-        result["limited"] = True
-        result["requested_limit"] = limit
+    movies = reduction_result["movies"][:limit]
+    
+    # Group by primary genre for coloring
+    genre_groups = {}
+    for movie in movies:
+        primary_genre = movie["genres"][0] if movie["genres"] else "Unknown"
+        if primary_genre not in genre_groups:
+            genre_groups[primary_genre] = []
+        genre_groups[primary_genre].append(movie)
+    
+    return {
+        "method": method,
+        "total_movies": len(movies),
+        "movies": movies,
+        "genre_groups": genre_groups,
+        "unique_genres": list(genre_groups.keys()),
+        "explained_variance": reduction_result.get("explained_variance_ratio", [])
+    } 
     
     return result
 

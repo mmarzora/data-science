@@ -331,7 +331,7 @@
                         mode: 'markers',
                         type: 'scatter',
                         name: `${genre} (${genreMovies.length})`,
-                        text: genreMovies.map(m => `${m.title}<br>Rating: ${m.rating || 'N/A'}<br>Year: ${m.release_year || 'N/A'}`),
+                        text: genreMovies.map(m => `${m.title}<br>Genres: ${m.genres.join(', ')}<br>Rating: ${m.rating || 'N/A'}<br>Year: ${m.release_year || 'N/A'}`),
                         hovertemplate: '%{text}<extra></extra>',
                         marker: {
                             color: colors[index % colors.length],
