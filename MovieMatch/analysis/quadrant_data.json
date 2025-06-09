@@ -1,0 +1,1792 @@
+[
+  {
+    "id": 1,
+    "title": "A Minecraft Movie",
+    "PC1": -0.19170989096164703,
+    "PC2": 0.15175645053386688,
+    "quadrant": "Q2",
+    "genres": [
+      "Family",
+      "Comedy",
+      "Adventure",
+      "Fantasy"
+    ],
+    "rating": 5.9,
+    "release_year": 2025
+  },
+  {
+    "id": 2,
+    "title": "Final Destination Bloodlines",
+    "PC1": -0.22747831046581268,
+    "PC2": -0.30880260467529297,
+    "quadrant": "Q3",
+    "genres": [
+      "Horror",
+      "Mystery"
+    ],
+    "rating": 7.2,
+    "release_year": 2025
+  },
+  {
+    "id": 3,
+    "title": "Novocaine",
+    "PC1": -0.05478185415267944,
+    "PC2": -0.11624183505773544,
+    "quadrant": "Q3",
+    "genres": [
+      "Action",
+      "Comedy",
+      "Thriller"
+    ],
+    "rating": 6.7,
+    "release_year": 2025
+  },
+  {
+    "id": 4,
+    "title": "A Working Man",
+    "PC1": 0.1577160805463791,
+    "PC2": -0.17450477182865143,
+    "quadrant": "Q4",
+    "genres": [
+      "Action",
+      "Crime",
+      "Thriller"
+    ],
+    "rating": 5.9,
+    "release_year": 2025
+  },
+  {
+    "id": 5,
+    "title": "Warfare",
+    "PC1": 0.3646068871021271,
+    "PC2": 0.1311310976743698,
+    "quadrant": "Q1",
+    "genres": [
+      "War",
+      "Action"
+    ],
+    "rating": 7.6,
+    "release_year": 2025
+  },
+  {
+    "id": 6,
+    "title": "Snow White",
+    "PC1": -0.39630264043807983,
+    "PC2": 0.13993766903877258,
+    "quadrant": "Q2",
+    "genres": [
+      "Family",
+      "Fantasy"
+    ],
+    "rating": 1.9,
+    "release_year": 2025
+  },
+  {
+    "id": 7,
+    "title": "Lilo & Stitch",
+    "PC1": -0.2868468463420868,
+    "PC2": 0.10457035154104233,
+    "quadrant": "Q2",
+    "genres": [
+      "Family",
+      "Comedy",
+      "Science Fiction"
+    ],
+    "rating": 7.2,
+    "release_year": 2025
+  },
+  {
+    "id": 8,
+    "title": "Until Dawn",
+    "PC1": -0.1809091717004776,
+    "PC2": -0.3575420081615448,
+    "quadrant": "Q3",
+    "genres": [
+      "Horror",
+      "Mystery"
+    ],
+    "rating": 6.0,
+    "release_year": 2025
+  },
+  {
+    "id": 9,
+    "title": "Mission: Impossible - The Final Reckoning",
+    "PC1": 0.31713321805000305,
+    "PC2": -0.13768073916435242,
+    "quadrant": "Q4",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Thriller"
+    ],
+    "rating": 7.6,
+    "release_year": 2025
+  },
+  {
+    "id": 10,
+    "title": "Death of a Unicorn",
+    "PC1": -0.26196444034576416,
+    "PC2": 0.03593748062849045,
+    "quadrant": "Q2",
+    "genres": [
+      "Horror",
+      "Fantasy",
+      "Comedy",
+      "Adventure"
+    ],
+    "rating": 6.1,
+    "release_year": 2025
+  },
+  {
+    "id": 11,
+    "title": "Fountain of Youth",
+    "PC1": -0.029519813135266304,
+    "PC2": 0.024323340505361557,
+    "quadrant": "Q2",
+    "genres": [
+      "Adventure",
+      "Fantasy",
+      "Mystery"
+    ],
+    "rating": 5.5,
+    "release_year": 2025
+  },
+  {
+    "id": 12,
+    "title": "The Legend of Ochi",
+    "PC1": -0.29542404413223267,
+    "PC2": 0.11834323406219482,
+    "quadrant": "Q2",
+    "genres": [
+      "Fantasy",
+      "Adventure",
+      "Family"
+    ],
+    "rating": 6.1,
+    "release_year": 2025
+  },
+  {
+    "id": 13,
+    "title": "Fear Street: Prom Queen",
+    "PC1": -0.11363371461629868,
+    "PC2": -0.17922548949718475,
+    "quadrant": "Q3",
+    "genres": [
+      "Horror",
+      "Mystery"
+    ],
+    "rating": 5.0,
+    "release_year": 2025
+  },
+  {
+    "id": 14,
+    "title": "Day of Reckoning",
+    "PC1": 0.13580599427223206,
+    "PC2": -0.11952834576368332,
+    "quadrant": "Q4",
+    "genres": [
+      "Western",
+      "Action"
+    ],
+    "rating": 4.2,
+    "release_year": 2025
+  },
+  {
+    "id": 15,
+    "title": "Captain America: Brave New World",
+    "PC1": 0.297290563583374,
+    "PC2": 0.23127838969230652,
+    "quadrant": "Q1",
+    "genres": [
+      "Action",
+      "Thriller",
+      "Science Fiction"
+    ],
+    "rating": 5.9,
+    "release_year": 2025
+  },
+  {
+    "id": 16,
+    "title": "Ash",
+    "PC1": -0.06822721660137177,
+    "PC2": -0.1840479075908661,
+    "quadrant": "Q3",
+    "genres": [
+      "Science Fiction",
+      "Horror",
+      "Thriller"
+    ],
+    "rating": 4.8,
+    "release_year": 2025
+  },
+  {
+    "id": 17,
+    "title": "The Great Dictator",
+    "PC1": 0.09732873737812042,
+    "PC2": 0.33625638484954834,
+    "quadrant": "Q1",
+    "genres": [
+      "Comedy",
+      "War"
+    ],
+    "rating": 8.5,
+    "release_year": 1940
+  },
+  {
+    "id": 18,
+    "title": "Another Simple Favor",
+    "PC1": -0.11972200870513916,
+    "PC2": -0.1325739473104477,
+    "quadrant": "Q3",
+    "genres": [
+      "Thriller",
+      "Comedy",
+      "Crime"
+    ],
+    "rating": 5.4,
+    "release_year": 2025
+  },
+  {
+    "id": 19,
+    "title": "Conclave",
+    "PC1": 0.03884396702051163,
+    "PC2": -0.13338883221149445,
+    "quadrant": "Q4",
+    "genres": [
+      "Drama",
+      "Thriller",
+      "Mystery"
+    ],
+    "rating": 7.6,
+    "release_year": 2024
+  },
+  {
+    "id": 20,
+    "title": "Moana 2",
+    "PC1": -0.22908030450344086,
+    "PC2": 0.2969264090061188,
+    "quadrant": "Q2",
+    "genres": [
+      "Animation",
+      "Adventure",
+      "Family",
+      "Comedy"
+    ],
+    "rating": 6.8,
+    "release_year": 2024
+  },
+  {
+    "id": 21,
+    "title": "Bad Influence",
+    "PC1": 0.04717119783163071,
+    "PC2": -0.2652369439601898,
+    "quadrant": "Q4",
+    "genres": [
+      "Thriller",
+      "Drama",
+      "Romance"
+    ],
+    "rating": 4.4,
+    "release_year": 2025
+  },
+  {
+    "id": 22,
+    "title": "Tin Soldier",
+    "PC1": 0.2480926513671875,
+    "PC2": 0.12560777366161346,
+    "quadrant": "Q1",
+    "genres": [
+      "Action",
+      "Thriller"
+    ],
+    "rating": 3.6,
+    "release_year": 2025
+  },
+  {
+    "id": 23,
+    "title": "Exterritorial",
+    "PC1": 0.11276115477085114,
+    "PC2": -0.28470301628112793,
+    "quadrant": "Q4",
+    "genres": [
+      "Thriller",
+      "Action"
+    ],
+    "rating": 6.0,
+    "release_year": 2025
+  },
+  {
+    "id": 24,
+    "title": "Thunderbolts*",
+    "PC1": 0.0970391035079956,
+    "PC2": -0.027449408546090126,
+    "quadrant": "Q4",
+    "genres": [
+      "Action",
+      "Science Fiction",
+      "Adventure"
+    ],
+    "rating": 7.8,
+    "release_year": 2025
+  },
+  {
+    "id": 25,
+    "title": "Brave Citizen",
+    "PC1": 0.14047062397003174,
+    "PC2": 0.0837717205286026,
+    "quadrant": "Q1",
+    "genres": [
+      "Action",
+      "Drama",
+      "Comedy"
+    ],
+    "rating": 6.7,
+    "release_year": 2023
+  },
+  {
+    "id": 26,
+    "title": "Saint Catherine",
+    "PC1": -0.3289896249771118,
+    "PC2": -0.33676403760910034,
+    "quadrant": "Q3",
+    "genres": [
+      "Horror"
+    ],
+    "rating": 4.4,
+    "release_year": 2024
+  },
+  {
+    "id": 27,
+    "title": "Mufasa: The Lion King",
+    "PC1": -0.12272863835096359,
+    "PC2": 0.3149128556251526,
+    "quadrant": "Q2",
+    "genres": [
+      "Adventure",
+      "Family",
+      "Animation"
+    ],
+    "rating": 6.8,
+    "release_year": 2024
+  },
+  {
+    "id": 28,
+    "title": "In the Lost Lands",
+    "PC1": -0.24571654200553894,
+    "PC2": 0.008569488301873207,
+    "quadrant": "Q2",
+    "genres": [
+      "Action",
+      "Fantasy",
+      "Adventure"
+    ],
+    "rating": 4.9,
+    "release_year": 2025
+  },
+  {
+    "id": 29,
+    "title": "Last Bullet",
+    "PC1": 0.20790895819664001,
+    "PC2": -0.05145799741148949,
+    "quadrant": "Q4",
+    "genres": [
+      "Action",
+      "Crime",
+      "Thriller",
+      "Drama"
+    ],
+    "rating": 6.5,
+    "release_year": 2025
+  },
+  {
+    "id": 30,
+    "title": "Sugar Baby",
+    "PC1": -0.24554042518138885,
+    "PC2": -0.11632080376148224,
+    "quadrant": "Q3",
+    "genres": [
+      "Thriller",
+      "Comedy"
+    ],
+    "rating": 3.8,
+    "release_year": 2024
+  },
+  {
+    "id": 31,
+    "title": "Jewel Thief - The Heist Begins",
+    "PC1": 0.19698578119277954,
+    "PC2": -0.042464323341846466,
+    "quadrant": "Q4",
+    "genres": [
+      "Action",
+      "Thriller"
+    ],
+    "rating": 4.3,
+    "release_year": 2025
+  },
+  {
+    "id": 32,
+    "title": "Sonic the Hedgehog 3",
+    "PC1": 0.010649101808667183,
+    "PC2": 0.24935850501060486,
+    "quadrant": "Q2",
+    "genres": [
+      "Action",
+      "Science Fiction",
+      "Comedy",
+      "Family"
+    ],
+    "rating": 7.1,
+    "release_year": 2024
+  },
+  {
+    "id": 33,
+    "title": "Havoc",
+    "PC1": 0.2644886374473572,
+    "PC2": -0.17333917319774628,
+    "quadrant": "Q4",
+    "genres": [
+      "Action",
+      "Crime",
+      "Thriller"
+    ],
+    "rating": 5.6,
+    "release_year": 2025
+  },
+  {
+    "id": 34,
+    "title": "The Monkey",
+    "PC1": -0.17191047966480255,
+    "PC2": 0.11603189259767532,
+    "quadrant": "Q2",
+    "genres": [
+      "Horror",
+      "Comedy"
+    ],
+    "rating": 5.8,
+    "release_year": 2025
+  },
+  {
+    "id": 35,
+    "title": "Sinners",
+    "PC1": -0.17616306245326996,
+    "PC2": -0.2329612523317337,
+    "quadrant": "Q3",
+    "genres": [
+      "Horror",
+      "Thriller"
+    ],
+    "rating": 8.2,
+    "release_year": 2025
+  },
+  {
+    "id": 36,
+    "title": "Rust",
+    "PC1": 0.1267257183790207,
+    "PC2": 0.022908195853233337,
+    "quadrant": "Q1",
+    "genres": [
+      "Western"
+    ],
+    "rating": 5.5,
+    "release_year": 2025
+  },
+  {
+    "id": 37,
+    "title": "Flight Risk",
+    "PC1": 0.3257434666156769,
+    "PC2": -0.16427946090698242,
+    "quadrant": "Q4",
+    "genres": [
+      "Action",
+      "Thriller"
+    ],
+    "rating": 5.5,
+    "release_year": 2025
+  },
+  {
+    "id": 38,
+    "title": "Panda Bear in Africa",
+    "PC1": -0.2616194784641266,
+    "PC2": 0.42679986357688904,
+    "quadrant": "Q2",
+    "genres": [
+      "Animation",
+      "Adventure",
+      "Comedy",
+      "Family"
+    ],
+    "rating": 5.7,
+    "release_year": 2024
+  },
+  {
+    "id": 39,
+    "title": "¡Qué Huevos, Sofía!",
+    "PC1": -0.2656826972961426,
+    "PC2": -0.09314984828233719,
+    "quadrant": "Q3",
+    "genres": [
+      "Comedy"
+    ],
+    "rating": 6.3,
+    "release_year": 2025
+  },
+  {
+    "id": 40,
+    "title": "Bloody Escape: Bats out of Hell",
+    "PC1": 0.041854940354824066,
+    "PC2": 0.1286383718252182,
+    "quadrant": "Q1",
+    "genres": [
+      "Animation",
+      "Action",
+      "Science Fiction"
+    ],
+    "rating": 5.5,
+    "release_year": 2024
+  },
+  {
+    "id": 41,
+    "title": "Karate Kid: Legends",
+    "PC1": 0.06543578207492828,
+    "PC2": 0.2608557343482971,
+    "quadrant": "Q1",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Drama"
+    ],
+    "rating": 6.8,
+    "release_year": 2025
+  },
+  {
+    "id": 42,
+    "title": "Peter Pan's Neverland Nightmare",
+    "PC1": -0.2827979624271393,
+    "PC2": -0.03925251215696335,
+    "quadrant": "Q3",
+    "genres": [
+      "Horror",
+      "Thriller",
+      "Fantasy"
+    ],
+    "rating": 5.2,
+    "release_year": 2025
+  },
+  {
+    "id": 43,
+    "title": "Final Destination",
+    "PC1": -0.03251739218831062,
+    "PC2": -0.18533414602279663,
+    "quadrant": "Q3",
+    "genres": [
+      "Horror"
+    ],
+    "rating": 6.8,
+    "release_year": 2000
+  },
+  {
+    "id": 44,
+    "title": "Deva",
+    "PC1": 0.0796651840209961,
+    "PC2": -0.14607329666614532,
+    "quadrant": "Q4",
+    "genres": [
+      "Action",
+      "Thriller",
+      "Mystery",
+      "Crime"
+    ],
+    "rating": 6.5,
+    "release_year": 2025
+  },
+  {
+    "id": 45,
+    "title": "Home Sweet Home: Rebirth",
+    "PC1": -0.06991399824619293,
+    "PC2": -0.296127587556839,
+    "quadrant": "Q3",
+    "genres": [
+      "Horror",
+      "Fantasy",
+      "Thriller",
+      "Mystery",
+      "Action"
+    ],
+    "rating": 4.8,
+    "release_year": 2025
+  },
+  {
+    "id": 46,
+    "title": "Batman Ninja vs. Yakuza League",
+    "PC1": 0.15119421482086182,
+    "PC2": 0.3309297561645508,
+    "quadrant": "Q1",
+    "genres": [
+      "Animation",
+      "Action"
+    ],
+    "rating": 6.4,
+    "release_year": 2025
+  },
+  {
+    "id": 47,
+    "title": "Final Destination 5",
+    "PC1": -2.8001475584460422e-05,
+    "PC2": -0.1672639101743698,
+    "quadrant": "Q3",
+    "genres": [
+      "Horror",
+      "Mystery"
+    ],
+    "rating": 6.0,
+    "release_year": 2011
+  },
+  {
+    "id": 48,
+    "title": "Plankton: The Movie",
+    "PC1": -0.2856919765472412,
+    "PC2": 0.30769965052604675,
+    "quadrant": "Q2",
+    "genres": [
+      "Animation",
+      "Adventure",
+      "Comedy",
+      "Family",
+      "Fantasy"
+    ],
+    "rating": 5.5,
+    "release_year": 2025
+  },
+  {
+    "id": 49,
+    "title": "Wonder Woman",
+    "PC1": -0.16918888688087463,
+    "PC2": 0.29540592432022095,
+    "quadrant": "Q2",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Fantasy"
+    ],
+    "rating": 7.5,
+    "release_year": 2017
+  },
+  {
+    "id": 50,
+    "title": "Rosario",
+    "PC1": -0.146162748336792,
+    "PC2": -0.33542558550834656,
+    "quadrant": "Q3",
+    "genres": [
+      "Horror"
+    ],
+    "rating": 4.2,
+    "release_year": 2025
+  },
+  {
+    "id": 51,
+    "title": "Spectre",
+    "PC1": 0.36936017870903015,
+    "PC2": -0.2443191558122635,
+    "quadrant": "Q4",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Thriller"
+    ],
+    "rating": 6.6,
+    "release_year": 2015
+  },
+  {
+    "id": 52,
+    "title": "Mission: Impossible - Dead Reckoning Part One",
+    "PC1": 0.38216912746429443,
+    "PC2": -0.14076732099056244,
+    "quadrant": "Q4",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Thriller"
+    ],
+    "rating": 7.8,
+    "release_year": 2023
+  },
+  {
+    "id": 53,
+    "title": "The Codes of War",
+    "PC1": 0.2326364815235138,
+    "PC2": 0.20116761326789856,
+    "quadrant": "Q1",
+    "genres": [
+      "Action",
+      "War"
+    ],
+    "rating": 5.4,
+    "release_year": 2025
+  },
+  {
+    "id": 54,
+    "title": "Gladiator II",
+    "PC1": 0.06982271373271942,
+    "PC2": 0.23045901954174042,
+    "quadrant": "Q1",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Drama"
+    ],
+    "rating": 6.7,
+    "release_year": 2024
+  },
+  {
+    "id": 55,
+    "title": "Venom: The Last Dance",
+    "PC1": 0.028498860076069832,
+    "PC2": 0.07084091007709503,
+    "quadrant": "Q1",
+    "genres": [
+      "Action",
+      "Science Fiction",
+      "Adventure"
+    ],
+    "rating": 6.2,
+    "release_year": 2024
+  },
+  {
+    "id": 56,
+    "title": "Kraven the Hunter",
+    "PC1": 0.04789144918322563,
+    "PC2": -0.011852231808006763,
+    "quadrant": "Q1",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Thriller"
+    ],
+    "rating": 5.7,
+    "release_year": 2024
+  },
+  {
+    "id": 57,
+    "title": "Wind River",
+    "PC1": 0.08614874631166458,
+    "PC2": -0.17347748577594757,
+    "quadrant": "Q4",
+    "genres": [
+      "Crime",
+      "Mystery",
+      "Thriller"
+    ],
+    "rating": 7.8,
+    "release_year": 2017
+  },
+  {
+    "id": 58,
+    "title": "Companion",
+    "PC1": -0.2006365805864334,
+    "PC2": -0.24613456428050995,
+    "quadrant": "Q3",
+    "genres": [
+      "Horror",
+      "Science Fiction",
+      "Thriller"
+    ],
+    "rating": 7.1,
+    "release_year": 2025
+  },
+  {
+    "id": 59,
+    "title": "Drop",
+    "PC1": -0.31435927748680115,
+    "PC2": -0.22999033331871033,
+    "quadrant": "Q3",
+    "genres": [
+      "Mystery",
+      "Thriller"
+    ],
+    "rating": 6.3,
+    "release_year": 2025
+  },
+  {
+    "id": 60,
+    "title": "Bullet Train Explosion",
+    "PC1": 0.11361286789178848,
+    "PC2": -0.06043405830860138,
+    "quadrant": "Q4",
+    "genres": [
+      "Action",
+      "Thriller",
+      "Crime",
+      "Drama"
+    ],
+    "rating": 6.4,
+    "release_year": 2025
+  },
+  {
+    "id": 61,
+    "title": "G20",
+    "PC1": 0.10555388033390045,
+    "PC2": -0.025890300050377846,
+    "quadrant": "Q4",
+    "genres": [
+      "Action",
+      "Mystery",
+      "Drama"
+    ],
+    "rating": 5.3,
+    "release_year": 2025
+  },
+  {
+    "id": 62,
+    "title": "Deadpool & Wolverine",
+    "PC1": 0.15308889746665955,
+    "PC2": 0.2705576419830322,
+    "quadrant": "Q1",
+    "genres": [
+      "Action",
+      "Comedy",
+      "Science Fiction"
+    ],
+    "rating": 7.7,
+    "release_year": 2024
+  },
+  {
+    "id": 63,
+    "title": "The Gorge",
+    "PC1": 0.04542233794927597,
+    "PC2": -0.09573183208703995,
+    "quadrant": "Q4",
+    "genres": [
+      "Romance",
+      "Science Fiction",
+      "Thriller"
+    ],
+    "rating": 6.9,
+    "release_year": 2025
+  },
+  {
+    "id": 64,
+    "title": "My Fault",
+    "PC1": -0.23789703845977783,
+    "PC2": 0.07063889503479004,
+    "quadrant": "Q2",
+    "genres": [
+      "Romance",
+      "Drama"
+    ],
+    "rating": 6.3,
+    "release_year": 2023
+  },
+  {
+    "id": 65,
+    "title": "Oh, Canada",
+    "PC1": -0.07282945513725281,
+    "PC2": 0.08291103690862656,
+    "quadrant": "Q2",
+    "genres": [
+      "Drama"
+    ],
+    "rating": 5.8,
+    "release_year": 2024
+  },
+  {
+    "id": 66,
+    "title": "xXx",
+    "PC1": 0.25642630457878113,
+    "PC2": 0.09997165948152542,
+    "quadrant": "Q1",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Thriller",
+      "Crime"
+    ],
+    "rating": 6.0,
+    "release_year": 2002
+  },
+  {
+    "id": 67,
+    "title": "Locked",
+    "PC1": 0.04507192596793175,
+    "PC2": 0.020637905225157738,
+    "quadrant": "Q1",
+    "genres": [
+      "Thriller"
+    ],
+    "rating": 6.0,
+    "release_year": 2025
+  },
+  {
+    "id": 68,
+    "title": "Fight or Flight",
+    "PC1": 0.11336368322372437,
+    "PC2": -0.04421127960085869,
+    "quadrant": "Q4",
+    "genres": [
+      "Action",
+      "Comedy",
+      "Thriller"
+    ],
+    "rating": 6.6,
+    "release_year": 2024
+  },
+  {
+    "id": 69,
+    "title": "Old Guy",
+    "PC1": 0.07848072797060013,
+    "PC2": 0.10919896513223648,
+    "quadrant": "Q1",
+    "genres": [
+      "Action",
+      "Comedy"
+    ],
+    "rating": 5.4,
+    "release_year": 2024
+  },
+  {
+    "id": 70,
+    "title": "Carjackers",
+    "PC1": 0.08345711976289749,
+    "PC2": -0.07976878434419632,
+    "quadrant": "Q4",
+    "genres": [
+      "Action",
+      "Adventure"
+    ],
+    "rating": 5.2,
+    "release_year": 2025
+  },
+  {
+    "id": 71,
+    "title": "The Wild Robot",
+    "PC1": -0.1396835893392563,
+    "PC2": 0.2614080607891083,
+    "quadrant": "Q2",
+    "genres": [
+      "Animation",
+      "Science Fiction",
+      "Family"
+    ],
+    "rating": 8.4,
+    "release_year": 2024
+  },
+  {
+    "id": 72,
+    "title": "Mission: Impossible",
+    "PC1": 0.43370264768600464,
+    "PC2": -0.14500218629837036,
+    "quadrant": "Q4",
+    "genres": [
+      "Adventure",
+      "Action",
+      "Thriller"
+    ],
+    "rating": 7.3,
+    "release_year": 1996
+  },
+  {
+    "id": 73,
+    "title": "Desert Dawn",
+    "PC1": 0.03168477863073349,
+    "PC2": -0.24241609871387482,
+    "quadrant": "Q4",
+    "genres": [
+      "Action",
+      "Crime",
+      "Mystery",
+      "Thriller"
+    ],
+    "rating": 5.7,
+    "release_year": 2025
+  },
+  {
+    "id": 74,
+    "title": "Final Destination 3",
+    "PC1": -0.2750362455844879,
+    "PC2": -0.13530226051807404,
+    "quadrant": "Q3",
+    "genres": [
+      "Horror",
+      "Mystery"
+    ],
+    "rating": 6.0,
+    "release_year": 2006
+  },
+  {
+    "id": 75,
+    "title": "Norbert",
+    "PC1": 0.06019570305943489,
+    "PC2": 0.11436629295349121,
+    "quadrant": "Q1",
+    "genres": [
+      "Animation",
+      "Adventure",
+      "Comedy"
+    ],
+    "rating": 6.8,
+    "release_year": 2025
+  },
+  {
+    "id": 76,
+    "title": "Turno nocturno",
+    "PC1": -0.26178503036499023,
+    "PC2": -0.2884688377380371,
+    "quadrant": "Q3",
+    "genres": [
+      "Horror"
+    ],
+    "rating": 5.5,
+    "release_year": 2024
+  },
+  {
+    "id": 77,
+    "title": "Devara: Part 1",
+    "PC1": -0.012440435588359833,
+    "PC2": 0.10352154076099396,
+    "quadrant": "Q2",
+    "genres": [
+      "Action",
+      "Drama"
+    ],
+    "rating": 6.2,
+    "release_year": 2024
+  },
+  {
+    "id": 78,
+    "title": "Sky Force",
+    "PC1": 0.2862403690814972,
+    "PC2": 0.145288348197937,
+    "quadrant": "Q1",
+    "genres": [
+      "Action",
+      "Thriller"
+    ],
+    "rating": 6.7,
+    "release_year": 2025
+  },
+  {
+    "id": 79,
+    "title": "The Final Destination",
+    "PC1": -0.10565648227930069,
+    "PC2": -0.2613030970096588,
+    "quadrant": "Q3",
+    "genres": [
+      "Horror",
+      "Mystery"
+    ],
+    "rating": 5.0,
+    "release_year": 2009
+  },
+  {
+    "id": 80,
+    "title": "Parasite",
+    "PC1": -0.1483156383037567,
+    "PC2": -0.056180451065301895,
+    "quadrant": "Q3",
+    "genres": [
+      "Comedy",
+      "Thriller",
+      "Drama"
+    ],
+    "rating": 8.6,
+    "release_year": 2019
+  },
+  {
+    "id": 81,
+    "title": "Dog Man",
+    "PC1": 0.007067442871630192,
+    "PC2": 0.18004056811332703,
+    "quadrant": "Q2",
+    "genres": [
+      "Family",
+      "Comedy",
+      "Adventure",
+      "Animation"
+    ],
+    "rating": 6.5,
+    "release_year": 2025
+  },
+  {
+    "id": 82,
+    "title": "The Room",
+    "PC1": -0.17839926481246948,
+    "PC2": -0.00848752073943615,
+    "quadrant": "Q2",
+    "genres": [
+      "Drama",
+      "Romance"
+    ],
+    "rating": 3.8,
+    "release_year": 2003
+  },
+  {
+    "id": 83,
+    "title": "The Chronicles of Narnia: The Lion, the Witch and the Wardrobe",
+    "PC1": -0.34474098682403564,
+    "PC2": 0.3011222183704376,
+    "quadrant": "Q2",
+    "genres": [
+      "Adventure",
+      "Family",
+      "Fantasy"
+    ],
+    "rating": 6.8,
+    "release_year": 2005
+  },
+  {
+    "id": 84,
+    "title": "The Alto Knights",
+    "PC1": 0.18477880954742432,
+    "PC2": -0.13098229467868805,
+    "quadrant": "Q4",
+    "genres": [
+      "Crime",
+      "Drama",
+      "History"
+    ],
+    "rating": 6.0,
+    "release_year": 2025
+  },
+  {
+    "id": 85,
+    "title": "Flow",
+    "PC1": -0.31125086545944214,
+    "PC2": 0.26990872621536255,
+    "quadrant": "Q2",
+    "genres": [
+      "Animation",
+      "Fantasy",
+      "Adventure"
+    ],
+    "rating": 8.1,
+    "release_year": 2024
+  },
+  {
+    "id": 86,
+    "title": "The Accountant²",
+    "PC1": -0.009715177118778229,
+    "PC2": -0.20322000980377197,
+    "quadrant": "Q3",
+    "genres": [
+      "Crime",
+      "Thriller",
+      "Action"
+    ],
+    "rating": 7.2,
+    "release_year": 2025
+  },
+  {
+    "id": 87,
+    "title": "The Vigilante",
+    "PC1": 0.05661941319704056,
+    "PC2": -0.18572230637073517,
+    "quadrant": "Q4",
+    "genres": [
+      "Thriller",
+      "Action"
+    ],
+    "rating": 4.6,
+    "release_year": 2023
+  },
+  {
+    "id": 88,
+    "title": "Gunslingers",
+    "PC1": 0.20567341148853302,
+    "PC2": 0.011217979714274406,
+    "quadrant": "Q1",
+    "genres": [
+      "Western",
+      "Action"
+    ],
+    "rating": 3.8,
+    "release_year": 2025
+  },
+  {
+    "id": 89,
+    "title": "Holy Night: Demon Hunters",
+    "PC1": 0.017000796273350716,
+    "PC2": -0.23511776328086853,
+    "quadrant": "Q4",
+    "genres": [
+      "Action",
+      "Fantasy",
+      "Horror"
+    ],
+    "rating": 5.2,
+    "release_year": 2025
+  },
+  {
+    "id": 90,
+    "title": "Fight Club",
+    "PC1": 0.22363312542438507,
+    "PC2": 0.006601072382181883,
+    "quadrant": "Q1",
+    "genres": [
+      "Drama"
+    ],
+    "rating": 8.7,
+    "release_year": 1999
+  },
+  {
+    "id": 91,
+    "title": "Your Fault",
+    "PC1": -0.26134181022644043,
+    "PC2": 0.010707931593060493,
+    "quadrant": "Q2",
+    "genres": [
+      "Romance",
+      "Drama"
+    ],
+    "rating": 5.4,
+    "release_year": 2024
+  },
+  {
+    "id": 92,
+    "title": "Spider-Man: Homecoming",
+    "PC1": 0.2317059338092804,
+    "PC2": 0.16704918444156647,
+    "quadrant": "Q1",
+    "genres": [
+      "Action",
+      "Adventure",
+      "Science Fiction",
+      "Drama"
+    ],
+    "rating": 7.6,
+    "release_year": 2017
+  },
+  {
+    "id": 93,
+    "title": "The Lord of the Rings: The War of the Rohirrim",
+    "PC1": -0.006055138073861599,
+    "PC2": 0.31455135345458984,
+    "quadrant": "Q2",
+    "genres": [
+      "Animation",
+      "Fantasy",
+      "Adventure",
+      "Action"
+    ],
+    "rating": 6.5,
+    "release_year": 2024
+  },
+  {
+    "id": 94,
+    "title": "Waves",
+    "PC1": 0.1331256479024887,
+    "PC2": -0.10700836032629013,
+    "quadrant": "Q4",
+    "genres": [
+      "Thriller",
+      "Drama",
+      "History"
+    ],
+    "rating": 7.8,
+    "release_year": 2024
+  },
+  {
+    "id": 95,
+    "title": "Ron's Gone Wrong",
+    "PC1": -0.20419204235076904,
+    "PC2": 0.23248682916164398,
+    "quadrant": "Q2",
+    "genres": [
+      "Animation",
+      "Science Fiction",
+      "Family",
+      "Comedy"
+    ],
+    "rating": 7.3,
+    "release_year": 2021
+  },
+  {
+    "id": 96,
+    "title": "John Wick: Chapter 4",
+    "PC1": 0.18611083924770355,
+    "PC2": -0.01614750549197197,
+    "quadrant": "Q1",
+    "genres": [
+      "Action",
+      "Thriller",
+      "Crime"
+    ],
+    "rating": 7.8,
+    "release_year": 2023
+  },
+  {
+    "id": 97,
+    "title": "Avengers: Infinity War",
+    "PC1": 0.3188380002975464,
+    "PC2": 0.2471352219581604,
+    "quadrant": "Q1",
+    "genres": [
+      "Adventure",
+      "Action",
+      "Science Fiction"
+    ],
+    "rating": 8.5,
+    "release_year": 2018
+  },
+  {
+    "id": 98,
+    "title": "Holland",
+    "PC1": -0.1642693132162094,
+    "PC2": -0.24763353168964386,
+    "quadrant": "Q3",
+    "genres": [
+      "Thriller",
+      "Mystery"
+    ],
+    "rating": 4.8,
+    "release_year": 2025
+  },
+  {
+    "id": 99,
+    "title": "Titanic",
+    "PC1": -0.25077885389328003,
+    "PC2": 0.037773456424474716,
+    "quadrant": "Q2",
+    "genres": [
+      "Drama",
+      "Romance"
+    ],
+    "rating": 7.7,
+    "release_year": 1997
+  },
+  {
+    "id": 100,
+    "title": "Bad Boys: Ride or Die",
+    "PC1": -0.004401707090437412,
+    "PC2": 0.03852884843945503,
+    "quadrant": "Q2",
+    "genres": [
+      "Action",
+      "Comedy",
+      "Crime",
+      "Thriller",
+      "Adventure"
+    ],
+    "rating": 6.7,
+    "release_year": 2024
+  },
+  {
+    "id": 101,
+    "title": "The Penguin Lessons",
+    "PC1": -0.1142108291387558,
+    "PC2": 0.0977429449558258,
+    "quadrant": "Q2",
+    "genres": [
+      "Drama"
+    ],
+    "rating": 6.9,
+    "release_year": 2025
+  },
+  {
+    "id": 102,
+    "title": "Demon City",
+    "PC1": 0.035479020327329636,
+    "PC2": -0.28520408272743225,
+    "quadrant": "Q4",
+    "genres": [
+      "Action",
+      "Crime",
+      "Fantasy",
+      "Thriller"
+    ],
+    "rating": 5.6,
+    "release_year": 2025
+  },
+  {
+    "id": 103,
+    "title": "Mission: Impossible - Rogue Nation",
+    "PC1": 0.40624016523361206,
+    "PC2": 0.022521721199154854,
+    "quadrant": "Q1",
+    "genres": [
+      "Action",
+      "Adventure"
+    ],
+    "rating": 7.6,
+    "release_year": 2015
+  },
+  {
+    "id": 104,
+    "title": "The Avengers",
+    "PC1": 0.34834471344947815,
+    "PC2": 0.1725335717201233,
+    "quadrant": "Q1",
+    "genres": [
+      "Science Fiction",
+      "Action",
+      "Adventure"
+    ],
+    "rating": 7.8,
+    "release_year": 2012
+  },
+  {
+    "id": 105,
+    "title": "Heart Eyes",
+    "PC1": -0.1217476949095726,
+    "PC2": -0.1427195966243744,
+    "quadrant": "Q3",
+    "genres": [
+      "Horror",
+      "Comedy",
+      "Romance"
+    ],
+    "rating": 6.3,
+    "release_year": 2025
+  },
+  {
+    "id": 106,
+    "title": "Air Force Elite: Thunderbirds",
+    "PC1": 0.29585686326026917,
+    "PC2": 0.1831195056438446,
+    "quadrant": "Q1",
+    "genres": [
+      "Documentary"
+    ],
+    "rating": 7.3,
+    "release_year": 2025
+  },
+  {
+    "id": 107,
+    "title": "Star Wars: Episode III - Revenge of the Sith",
+    "PC1": 0.2146618813276291,
+    "PC2": 0.3478657603263855,
+    "quadrant": "Q1",
+    "genres": [
+      "Adventure",
+      "Action",
+      "Science Fiction"
+    ],
+    "rating": 7.4,
+    "release_year": 2005
+  },
+  {
+    "id": 108,
+    "title": "The Godfather",
+    "PC1": 0.08358648419380188,
+    "PC2": -0.15477731823921204,
+    "quadrant": "Q4",
+    "genres": [
+      "Drama",
+      "Crime"
+    ],
+    "rating": 9.0,
+    "release_year": 1972
+  },
+  {
+    "id": 109,
+    "title": "Alien: Romulus",
+    "PC1": 0.011265937238931656,
+    "PC2": -0.005687492899596691,
+    "quadrant": "Q2",
+    "genres": [
+      "Horror",
+      "Science Fiction"
+    ],
+    "rating": 7.3,
+    "release_year": 2024
+  },
+  {
+    "id": 110,
+    "title": "Apocalypse Z: The Beginning of the End",
+    "PC1": 0.021777525544166565,
+    "PC2": 0.06019076332449913,
+    "quadrant": "Q1",
+    "genres": [
+      "Drama",
+      "Action",
+      "Horror"
+    ],
+    "rating": 6.3,
+    "release_year": 2024
+  },
+  {
+    "id": 111,
+    "title": "Shrek",
+    "PC1": -0.3015996515750885,
+    "PC2": 0.42314526438713074,
+    "quadrant": "Q2",
+    "genres": [
+      "Animation",
+      "Comedy",
+      "Fantasy",
+      "Adventure",
+      "Family"
+    ],
+    "rating": 8.0,
+    "release_year": 2001
+  },
+  {
+    "id": 112,
+    "title": "Oppenheimer",
+    "PC1": 0.2280476838350296,
+    "PC2": 0.2534269690513611,
+    "quadrant": "Q1",
+    "genres": [
+      "Drama",
+      "History"
+    ],
+    "rating": 8.2,
+    "release_year": 2023
+  },
+  {
+    "id": 113,
+    "title": "How to Train Your Dragon",
+    "PC1": -0.08504898101091385,
+    "PC2": 0.40955379605293274,
+    "quadrant": "Q2",
+    "genres": [
+      "Fantasy",
+      "Adventure",
+      "Animation",
+      "Family"
+    ],
+    "rating": 8.2,
+    "release_year": 2010
+  },
+  {
+    "id": 114,
+    "title": "The Goldsmith's Secret",
+    "PC1": -0.11174880713224411,
+    "PC2": -0.22334742546081543,
+    "quadrant": "Q3",
+    "genres": [
+      "Drama",
+      "Romance"
+    ],
+    "rating": 6.0,
+    "release_year": 2025
+  },
+  {
+    "id": 115,
+    "title": "Harry Potter and the Chamber of Secrets",
+    "PC1": -0.10407506674528122,
+    "PC2": 0.04451028257608414,
+    "quadrant": "Q2",
+    "genres": [
+      "Adventure",
+      "Fantasy"
+    ],
+    "rating": 7.6,
+    "release_year": 2002
+  },
+  {
+    "id": 116,
+    "title": "Red One",
+    "PC1": -0.07599517703056335,
+    "PC2": 0.09314768761396408,
+    "quadrant": "Q2",
+    "genres": [
+      "Action",
+      "Comedy",
+      "Fantasy"
+    ],
+    "rating": 6.5,
+    "release_year": 2024
+  },
+  {
+    "id": 117,
+    "title": "MK Ultra",
+    "PC1": 0.22647085785865784,
+    "PC2": -0.10024046152830124,
+    "quadrant": "Q4",
+    "genres": [
+      "Thriller"
+    ],
+    "rating": 5.2,
+    "release_year": 2022
+  },
+  {
+    "id": 118,
+    "title": "Mission: Impossible II",
+    "PC1": 0.3809815049171448,
+    "PC2": -0.014640666544437408,
+    "quadrant": "Q1",
+    "genres": [
+      "Adventure",
+      "Action",
+      "Thriller"
+    ],
+    "rating": 5.9,
+    "release_year": 2000
+  },
+  {
+    "id": 119,
+    "title": "The Matrix",
+    "PC1": 0.256428986787796,
+    "PC2": -0.06035910174250603,
+    "quadrant": "Q4",
+    "genres": [
+      "Action",
+      "Science Fiction"
+    ],
+    "rating": 8.5,
+    "release_year": 1999
+  },
+  {
+    "id": 120,
+    "title": "Pleasure",
+    "PC1": -0.33358851075172424,
+    "PC2": -0.06461795419454575,
+    "quadrant": "Q3",
+    "genres": [
+      "Drama"
+    ],
+    "rating": 6.2,
+    "release_year": 2021
+  },
+  {
+    "id": 121,
+    "title": "Gerald's Game",
+    "PC1": -0.12127305567264557,
+    "PC2": -0.12875232100486755,
+    "quadrant": "Q3",
+    "genres": [
+      "Horror",
+      "Thriller"
+    ],
+    "rating": 6.6,
+    "release_year": 2017
+  },
+  {
+    "id": 122,
+    "title": "Dirty Angels",
+    "PC1": 0.08261613547801971,
+    "PC2": -0.12533776462078094,
+    "quadrant": "Q4",
+    "genres": [
+      "Action",
+      "Drama",
+      "Thriller",
+      "War"
+    ],
+    "rating": 4.6,
+    "release_year": 2024
+  },
+  {
+    "id": 123,
+    "title": "Heretic",
+    "PC1": -0.03435785323381424,
+    "PC2": -0.09113888442516327,
+    "quadrant": "Q3",
+    "genres": [
+      "Horror",
+      "Thriller"
+    ],
+    "rating": 7.1,
+    "release_year": 2024
+  },
+  {
+    "id": 124,
+    "title": "The Dark Knight",
+    "PC1": 0.23927615582942963,
+    "PC2": -0.06802042573690414,
+    "quadrant": "Q4",
+    "genres": [
+      "Drama",
+      "Action",
+      "Crime",
+      "Thriller"
+    ],
+    "rating": 9.2,
+    "release_year": 2008
+  },
+  {
+    "id": 125,
+    "title": "Carry-On",
+    "PC1": 0.15110817551612854,
+    "PC2": -0.1912713199853897,
+    "quadrant": "Q4",
+    "genres": [
+      "Thriller",
+      "Action"
+    ],
+    "rating": 6.4,
+    "release_year": 2024
+  },
+  {
+    "id": 126,
+    "title": "Elevation",
+    "PC1": -0.21399714052677155,
+    "PC2": -0.0489620678126812,
+    "quadrant": "Q3",
+    "genres": [
+      "Action",
+      "Science Fiction",
+      "Thriller"
+    ],
+    "rating": 5.8,
+    "release_year": 2024
+  },
+  {
+    "id": 127,
+    "title": "Piglet",
+    "PC1": -0.26860716938972473,
+    "PC2": -0.12344986200332642,
+    "quadrant": "Q3",
+    "genres": [
+      "Horror"
+    ],
+    "rating": 2.5,
+    "release_year": 2025
+  },
+  {
+    "id": 128,
+    "title": "Star Wars",
+    "PC1": 0.10942569375038147,
+    "PC2": 0.2925543189048767,
+    "quadrant": "Q1",
+    "genres": [
+      "Adventure",
+      "Action",
+      "Science Fiction"
+    ],
+    "rating": 8.7,
+    "release_year": 1977
+  },
+  {
+    "id": 129,
+    "title": "Barbie",
+    "PC1": -0.30524742603302,
+    "PC2": 0.320061057806015,
+    "quadrant": "Q2",
+    "genres": [
+      "Comedy",
+      "Adventure"
+    ],
+    "rating": 7.0,
+    "release_year": 2023
+  },
+  {
+    "id": 130,
+    "title": "Twilight",
+    "PC1": -0.26108518242836,
+    "PC2": -0.16218706965446472,
+    "quadrant": "Q3",
+    "genres": [
+      "Fantasy",
+      "Drama",
+      "Romance"
+    ],
+    "rating": 5.5,
+    "release_year": 2008
+  },
+  {
+    "id": 131,
+    "title": "The Accountant",
+    "PC1": 0.012757948599755764,
+    "PC2": -0.15299193561077118,
+    "quadrant": "Q4",
+    "genres": [
+      "Crime",
+      "Thriller",
+      "Drama"
+    ],
+    "rating": 7.5,
+    "release_year": 2016
+  }
+]

@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Movie Quadrant Analysis</title>
+  <script src="https://cdn.plot.ly/plotly-2.32.0.min.js"></script>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f7f7f7; }
+    .container { max-width: 1200px; margin: 30px auto; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #0001; padding: 32px; }
+    #scatter { width: 100%; height: 500px; }
+    #quadrant-controls { margin: 24px 0 8px 0; }
+    .quad-btn { display: inline-block; margin-right: 16px; padding: 8px 18px; border-radius: 6px; border: none; background: #eee; color: #333; font-weight: bold; cursor: pointer; font-size: 1rem; transition: background 0.2s; }
+    .quad-btn.active, .quad-btn:hover { background: #0074D9; color: #fff; }
+    #genre-bar { width: 100%; height: 320px; }
+    #quad-desc { margin: 18px 0 0 0; font-size: 1.1rem; background: #f0f6ff; border-left: 4px solid #0074D9; padding: 16px; border-radius: 4px; }
+    @media (max-width: 700px) { .container { padding: 8px; } }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div style="display:flex; gap:24px; align-items:flex-end; flex-wrap:wrap; margin-bottom:18px;">
+      <div style="display:flex; flex-direction:column;">
+        <label for="movie-search" style="font-weight:bold;">Search Movie: </label>
+        <div style="position:relative;">
+          <input id="movie-search" type="text" style="padding:6px 12px; border-radius:4px; font-size:1rem; width:260px;" placeholder="Type to search..." autocomplete="off">
+          <div id="movie-suggestions" style="position:absolute; z-index:10;"></div>
+        </div>
+      </div>
+      <div style="display:flex; flex-direction:column;">
+        <label for="genre-filter" style="font-weight:bold;">Filter by Genre: </label>
+        <select id="genre-filter" style="padding:6px 12px; border-radius:4px; font-size:1rem; min-width:160px;"></select>
+      </div>
+    </div>
+    <h1>Movie Quadrant Analysis</h1>
+    <div id="scatter"></div>
+    <div id="quadrant-controls"></div>
+    <div id="quad-desc"></div>
+    <div id="genre-bar"></div>
+  </div>
+  <script>
+    // Utility: Generate human-readable description for a quadrant
+    function describeQuadrant(movies, quadrant) {
+      const n = movies.length;
+      if (n === 0) return `${quadrant}: No movies in this quadrant.`;
+      // Count genres
+      const genreCounts = {};
+      movies.forEach(m => m.genres.forEach(g => { genreCounts[g] = (genreCounts[g]||0)+1; }));
+      const sorted = Object.entries(genreCounts).sort((a,b) => b[1]-a[1]);
+      const top = sorted.slice(0,5);
+      // Compose description
+      let desc = '';
+      if (top.length === 1) desc = `mostly ${top[0][0]}`;
+      else if (top.length === 2) desc = `mostly ${top[0][0]} and ${top[1][0]}`;
+      else desc = `mostly ${top[0][0]}, ${top[1][0]}, and ${top[2][0]}`;
+      // Percentages
+      const percent = top.map(([g,c]) => [g, Math.round(100*c/n*10)/10]);
+      const details = percent.map(([g,p]) => `${g} (${p}%)`).join(', ');
+      // Top 3 rated movies
+      const topMovies = movies.slice().sort((a,b) => (b.rating||0)-(a.rating||0)).slice(0,3);
+      const topMoviesText = topMovies.length > 0 ? ` Top rated: ` + topMovies.map(m => `${m.title} (${m.rating})`).join(', ') + '.' : '';
+      // Movies closest to quadrant average
+      const meanPC1 = movies.reduce((sum, m) => sum + m.PC1, 0) / n;
+      const meanPC2 = movies.reduce((sum, m) => sum + m.PC2, 0) / n;
+      const closest = movies.slice().map(m => ({...m, dist: Math.sqrt((m.PC1-meanPC1)**2 + (m.PC2-meanPC2)**2)}))
+        .sort((a,b) => a.dist-b.dist).slice(0,3);
+      const closestText = closest.length > 0 ? ` Closest to quadrant center: ` + closest.map(m => `${m.title} (dist: ${m.dist.toFixed(2)})`).join(', ') + '.' : '';
+      return `${quadrant} (${n} movies): This quadrant contains ${desc} movies. Top genres: ${details}.${topMoviesText}${closestText}`;
+    }
+
+    fetch('quadrant_data.json')
+      .then(res => res.json())
+      .then(data => {
+        const quadrants = ['Q1','Q2','Q3','Q4'];
+        const quadColors = { Q1: '#0074D9', Q2: '#2ECC40', Q3: '#FF4136', Q4: '#FF851B' };
+        let currentQuadrant = 'Q1';
+        let currentGenre = 'All genres';
+        let highlightedMovie = null;
+
+        // Find all unique genres
+        const allGenres = Array.from(new Set(data.flatMap(d => d.genres))).sort();
+        const genreFilter = document.getElementById('genre-filter');
+        genreFilter.innerHTML = '<option>All genres</option>' + allGenres.map(g => `<option>${g}</option>`).join('');
+        genreFilter.onchange = function() {
+          currentGenre = this.value;
+          drawScatter(currentQuadrant);
+        };
+
+        // Find median lines for quadrant boundaries
+        const allPC1 = data.map(d => d.PC1);
+        const allPC2 = data.map(d => d.PC2);
+        const pc1_median = allPC1.slice().sort((a,b)=>a-b)[Math.floor(allPC1.length/2)];
+        const pc2_median = allPC2.slice().sort((a,b)=>a-b)[Math.floor(allPC2.length/2)];
+        const pc1_min = Math.min(...allPC1), pc1_max = Math.max(...allPC1);
+        const pc2_min = Math.min(...allPC2), pc2_max = Math.max(...allPC2);
+
+        // Scatter traces (no highlight/fade)
+        function getScatterTraces() {
+          // Main traces for each quadrant
+          const traces = quadrants.map(q => {
+            let quadMovies = data.filter(d => d.quadrant === q);
+            if (currentGenre !== 'All genres') {
+              quadMovies = quadMovies.filter(d => d.genres.includes(currentGenre));
+            }
+            // Prepare hover text for each point
+            const hoverText = quadMovies.map(d =>
+              `<b>${d.title}</b><br>Genres: ${d.genres.join(', ')}<br>Rating: ${d.rating}<br>Year: ${d.release_year}`
+            );
+            return {
+              x: quadMovies.map(d => d.PC1),
+              y: quadMovies.map(d => d.PC2),
+              text: hoverText,
+              mode: 'markers',
+              type: 'scatter',
+              name: q,
+              marker: {
+                color: quadColors[q],
+                size: 10,
+                opacity: 1,
+                line: { width: 1, color: '#fff' }
+              },
+              hoverinfo: 'text',
+            };
+          });
+          // Highlighted movie trace
+          if (highlightedMovie) {
+            // Only show if movie is in the current genre filter
+            if (currentGenre === 'All genres' || highlightedMovie.genres.includes(currentGenre)) {
+              traces.push({
+                x: [highlightedMovie.PC1],
+                y: [highlightedMovie.PC2],
+                text: [`<b>${highlightedMovie.title}</b><br>Genres: ${highlightedMovie.genres.join(', ')}<br>Rating: ${highlightedMovie.rating}<br>Year: ${highlightedMovie.release_year}`],
+                mode: 'markers+text',
+                type: 'scatter',
+                name: 'Selected',
+                marker: {
+                  color: '#111',
+                  size: 22,
+                  opacity: 1,
+                  line: { width: 4, color: '#FFD700' }
+                },
+                hoverinfo: 'text',
+                showlegend: false,
+                textposition: 'top center',
+                textfont: { color: '#111', size: 14, family: 'Arial' },
+              });
+            }
+          }
+          return traces;
+        }
+
+        // Quadrant background shapes
+        function getQuadrantShapes(activeQuadrant) {
+          const alpha = 0.13;
+          const shapes = [];
+          // Q1: Top-right
+          if (activeQuadrant === 'Q1') shapes.push({
+            type: 'rect', xref: 'x', yref: 'y',
+            x0: pc1_median, x1: pc1_max, y0: pc2_median, y1: pc2_max,
+            fillcolor: quadColors.Q1, opacity: alpha, line: {width:0}
+          });
+          // Q2: Top-left
+          if (activeQuadrant === 'Q2') shapes.push({
+            type: 'rect', xref: 'x', yref: 'y',
+            x0: pc1_min, x1: pc1_median, y0: pc2_median, y1: pc2_max,
+            fillcolor: quadColors.Q2, opacity: alpha, line: {width:0}
+          });
+          // Q3: Bottom-left
+          if (activeQuadrant === 'Q3') shapes.push({
+            type: 'rect', xref: 'x', yref: 'y',
+            x0: pc1_min, x1: pc1_median, y0: pc2_min, y1: pc2_median,
+            fillcolor: quadColors.Q3, opacity: alpha, line: {width:0}
+          });
+          // Q4: Bottom-right
+          if (activeQuadrant === 'Q4') shapes.push({
+            type: 'rect', xref: 'x', yref: 'y',
+            x0: pc1_median, x1: pc1_max, y0: pc2_min, y1: pc2_median,
+            fillcolor: quadColors.Q4, opacity: alpha, line: {width:0}
+          });
+          // Add median lines
+          shapes.push(
+            {type:'line', xref:'x', yref:'paper', x0:pc1_median, x1:pc1_median, y0:0, y1:1, line:{color:'#888',width:2,dash:'dot'}},
+            {type:'line', xref:'paper', yref:'y', x0:0, x1:1, y0:pc2_median, y1:pc2_median, line:{color:'#888',width:2,dash:'dot'}}
+          );
+          return shapes;
+        }
+
+        function drawScatter(activeQuadrant) {
+          Plotly.newPlot('scatter', getScatterTraces(), {
+            title: 'Movies by Quadrant (PCA)',
+            xaxis: { title: 'PC1', zeroline: false },
+            yaxis: { title: 'PC2', zeroline: false },
+            legend: { orientation: 'h', x: 0.5, xanchor: 'center', y: -0.2 },
+            margin: { t: 80, l: 50, r: 20, b: 80 },
+            plot_bgcolor: '#f7f7f7',
+            paper_bgcolor: '#fff',
+            shapes: getQuadrantShapes(activeQuadrant)
+          }, {responsive: true});
+        }
+        drawScatter(currentQuadrant);
+
+        // --- Quadrant controls ---
+        const controls = document.getElementById('quadrant-controls');
+        quadrants.forEach(q => {
+          const btn = document.createElement('button');
+          btn.textContent = q;
+          btn.className = 'quad-btn' + (q==='Q1' ? ' active' : '');
+          btn.onclick = () => setQuadrant(q);
+          controls.appendChild(btn);
+        });
+
+        // --- Genre bar chart and description ---
+        function setQuadrant(q) {
+          currentQuadrant = q;
+          // Update button highlight
+          document.querySelectorAll('.quad-btn').forEach(b => b.classList.remove('active'));
+          document.querySelector('.quad-btn:nth-child('+(quadrants.indexOf(q)+1)+')').classList.add('active');
+          // Update scatter background
+          drawScatter(q);
+          // Data for this quadrant
+          const quadMovies = data.filter(d => d.quadrant === q);
+          // Description
+          document.getElementById('quad-desc').textContent = describeQuadrant(quadMovies, q);
+          // Genre counts
+          const genreCounts = {};
+          quadMovies.forEach(m => m.genres.forEach(g => { genreCounts[g] = (genreCounts[g]||0)+1; }));
+          const sorted = Object.entries(genreCounts).sort((a,b) => b[1]-a[1]);
+          // Prepare hover text for each genre bar
+          const hoverText = sorted.map(([genre]) => {
+            // Movies in this quadrant and genre
+            const moviesInGenre = quadMovies.filter(m => m.genres.includes(genre));
+            const top3 = moviesInGenre.slice().sort((a,b) => (b.rating||0)-(a.rating||0)).slice(0,3);
+            if (top3.length === 0) return `${genre}`;
+            return `${genre}<br>Top rated:<br>` + top3.map(m => `${m.title} (${m.rating})`).join('<br>');
+          });
+          // Bar chart
+          Plotly.newPlot('genre-bar', [{
+            x: sorted.map(([g])=>g),
+            y: sorted.map(([_,c])=>c),
+            type: 'bar',
+            marker: { color: quadColors[q] },
+            hoverinfo: 'text',
+            hovertemplate: '%{x}<br>Count: %{y}<br>%{customdata}<extra></extra>',
+            customdata: hoverText,
+          }], {
+            title: `Genre Composition for ${q}`,
+            yaxis: { title: 'Count', rangemode: 'tozero' },
+            margin: { t: 40, l: 50, r: 20, b: 80 },
+            plot_bgcolor: '#f7f7f7',
+            paper_bgcolor: '#fff',
+          }, {responsive: true});
+        }
+        setQuadrant('Q1'); // Default
+
+        // --- Movie search widget ---
+        const movieInput = document.getElementById('movie-search');
+        const suggestionsDiv = document.getElementById('movie-suggestions');
+        let suggestionList = [];
+        function showSuggestions(val) {
+          if (!val) { suggestionsDiv.innerHTML = ''; return; }
+          const matches = data.filter(m => m.title.toLowerCase().includes(val.toLowerCase()));
+          suggestionList = matches.slice(0,8);
+          if (suggestionList.length === 0) { suggestionsDiv.innerHTML = ''; return; }
+          suggestionsDiv.innerHTML = '<div style="position:absolute; background:#fff; border:1px solid #ccc; border-radius:4px; width:260px; max-height:180px; overflow-y:auto;">' +
+            suggestionList.map((m,i) => `<div style='padding:7px 12px; cursor:pointer;' data-idx='${i}'>${m.title}</div>`).join('') + '</div>';
+          Array.from(suggestionsDiv.querySelectorAll('div[data-idx]')).forEach(div => {
+            div.onclick = function() {
+              const idx = +this.getAttribute('data-idx');
+              highlightedMovie = suggestionList[idx];
+              movieInput.value = highlightedMovie.title;
+              suggestionsDiv.innerHTML = '';
+              drawScatter(currentQuadrant);
+            };
+          });
+        }
+        movieInput.oninput = function() {
+          highlightedMovie = null;
+          drawScatter(currentQuadrant);
+          showSuggestions(this.value);
+        };
+        movieInput.onfocus = function() { showSuggestions(this.value); };
+        movieInput.onblur = function() { setTimeout(()=>{ suggestionsDiv.innerHTML = ''; }, 120); };
+        // Clear highlight if input is cleared
+        movieInput.addEventListener('keydown', function(e) {
+          if (e.key === 'Backspace' && this.value.length <= 1) {
+            highlightedMovie = null;
+            drawScatter(currentQuadrant);
+          }
+        });
+      });
+  </script>
+</body>
+</html> 
