@@ -7,7 +7,7 @@ from sqlalchemy.orm import Session
 from typing import Optional, List
 import json
 
-from ...database.database import get_db
+from ...database.db import get_db
 from ...tools.embedding_analyzer import EmbeddingAnalyzer
 from ...tools.semantic_analyzer import SemanticAnalyzer
 

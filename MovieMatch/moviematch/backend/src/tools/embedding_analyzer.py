@@ -25,7 +25,12 @@ os.environ['OMP_NUM_THREADS'] = '1'
 
 from ..models.models import Movie, UserPreference
 from ..services.movie_service import movie_service
-from ..database.database import get_db
+from ..database.db import get_db
+
+def parse_json_field(val):
+    if isinstance(val, str):
+        return json.loads(val)
+    return val if val else []
 
 class EmbeddingAnalyzer:
     """Tool for analyzing and interpreting movie embeddings."""
@@ -51,7 +56,7 @@ class EmbeddingAnalyzer:
             embeddings.append(embedding)
             
             movie_dict = movie.to_dict()
-            movie_dict['genres'] = json.loads(movie_dict['genres']) if movie_dict['genres'] else []
+            movie_dict['genres'] = parse_json_field(movie_dict['genres']) if movie_dict['genres'] else []
             movie_data.append(movie_dict)
         
         return np.array(embeddings), movie_data
@@ -135,7 +140,7 @@ class EmbeddingAnalyzer:
             visualization_data.append({
                 "id": movie["id"],
                 "title": movie["title"],
-                "genres": movie["genres"],
+                "genres": parse_json_field(movie["genres"]),
                 "rating": movie.get("rating"),
                 "release_year": movie.get("release_year"),
                 "x": float(reduced_embeddings[i, 0]),
@@ -204,7 +209,7 @@ class EmbeddingAnalyzer:
                 "avg_rating": float(np.mean(ratings)) if ratings else None,
                 "avg_year": float(np.mean(years)) if years else None,
                 "sample_movies": [
-                    {"id": m["id"], "title": m["title"], "genres": m["genres"]}
+                    {"id": m["id"], "title": m["title"], "genres": parse_json_field(m["genres"])}
                     for m in movies[:5]
                 ]
             }
@@ -260,11 +265,11 @@ class EmbeddingAnalyzer:
             "total_interactions": user_prefs.total_interactions,
             "embedding_stats": embedding_stats,
             "most_similar_movies": [
-                {"title": movie["title"], "genres": movie["genres"], "similarity": sim}
+                {"title": movie["title"], "genres": parse_json_field(movie["genres"]), "similarity": sim}
                 for sim, movie in similarities[:10]
             ],
             "least_similar_movies": [
-                {"title": movie["title"], "genres": movie["genres"], "similarity": sim}
+                {"title": movie["title"], "genres": parse_json_field(movie["genres"]), "similarity": sim}
                 for sim, movie in similarities[-5:]
             ],
             "top_positive_dimensions": [int(dim) for dim in top_positive_dims],
@@ -339,12 +344,12 @@ class EmbeddingAnalyzer:
             "movie1": {
                 "id": movie1.id,
                 "title": movie1.title,
-                "genres": json.loads(movie1.genres) if movie1.genres else []
+                "genres": parse_json_field(movie1.genres) if movie1.genres else []
             },
             "movie2": {
                 "id": movie2.id,
                 "title": movie2.title,
-                "genres": json.loads(movie2.genres) if movie2.genres else []
+                "genres": parse_json_field(movie2.genres) if movie2.genres else []
             },
             "similarity_metrics": {
                 "cosine_similarity": cosine_sim,

@@ -1,30 +1,23 @@
-import sqlite3
-from pathlib import Path
-import logging
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker, declarative_base
+import os
 
-# Configure logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
+from dotenv import load_dotenv
 
-# Use absolute path to the populated database file
-DB_PATH = Path("/Users/maitemarzoratti/Documents/data-science/MovieMatch/moviematch/src/database/movies.db")
+load_dotenv(dotenv_path='.env')
 
-logger.info(f"Database path configured: {DB_PATH}")
-logger.info(f"Database exists: {DB_PATH.exists()}")
+
+# Load the database URL from environment variable
+DATABASE_URL = os.getenv("POSTGRES_DATABASE_URL")
+
+# Set up the SQLAlchemy engine and session
+engine = create_engine(DATABASE_URL)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+Base = declarative_base()
 
 def get_db():
-    """Get a database connection."""
-    logger.info(f"Creating database connection to: {DB_PATH}")
-    conn = sqlite3.connect(str(DB_PATH))
-    conn.row_factory = sqlite3.Row
-    
-    # Log database info
-    cursor = conn.cursor()
+    db = SessionLocal()
     try:
-        cursor.execute("SELECT COUNT(*) FROM movies")
-        count = cursor.fetchone()[0]
-        logger.info(f"Database connected successfully, movies count: {count}")
-    except Exception as e:
-        logger.error(f"Error checking database: {e}")
-    
-    return conn 
+        yield db
+    finally:
+        db.close() 

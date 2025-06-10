@@ -1,98 +1,62 @@
 from sentence_transformers import SentenceTransformer
 import numpy as np
-import sqlite3
 import json
-from pathlib import Path
 import logging
+from sqlalchemy.orm import Session
+from moviematch.backend.src.database.db import get_db
+from moviematch.backend.src.models.models import Movie
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+def parse_json_field(val):
+    if isinstance(val, str):
+        return json.loads(val)
+    return val if val else []
 
 class MovieEmbeddings:
     def __init__(self, model_name='all-MiniLM-L6-v2'):
         """Initialize the embedding generator with a model."""
         self.model = SentenceTransformer(model_name)
-        self.db_path = Path(__file__).parent.parent / 'database' / 'movies.db'
-        
-    def connect_db(self):
-        """Create a database connection."""
-        conn = sqlite3.connect(str(self.db_path))
-        conn.row_factory = sqlite3.Row
-        return conn
-        
+
     def _get_movie_text(self, title: str, description: str, genres: list) -> str:
         """Combine movie features into a single text for embedding."""
         features = []
-        
-        # Add title (most important)
         if title:
             features.append(title)
-            
-        # Add description
         if description:
             features.append(description)
-            
-        # Add genres
         if genres:
             features.extend(genres)
-                
         return " ".join(features)
-        
+
     def generate_embedding(self, text: str) -> np.ndarray:
         """Generate embedding for a single text."""
         return self.model.encode(text)
-        
-    def update_movie_embedding(self, movie_id: int, title: str, description: str, genres: str):
-        """Update the embedding for a single movie."""
+
+    def update_movie_embedding(self, db: Session, movie: Movie):
+        """Update the embedding for a single movie using SQLAlchemy session."""
         try:
-            # Parse genres from JSON string
-            genre_list = json.loads(genres) if genres else []
-            
-            # Generate text representation
-            text = self._get_movie_text(title, description, genre_list)
+            genres = parse_json_field(movie.genres) if movie.genres else []
+            text = self._get_movie_text(movie.title, movie.description, genres)
             if not text.strip():
-                logger.warning(f"No text to generate embedding for movie {movie_id}")
+                logger.warning(f"No text to generate embedding for movie {movie.id}")
                 return
-                
-            # Generate embedding
             embedding = self.generate_embedding(text)
-            
-            # Store in database
-            with self.connect_db() as conn:
-                conn.execute(
-                    """
-                    UPDATE movies 
-                    SET embedding = ?, 
-                        updated_at = CURRENT_TIMESTAMP 
-                    WHERE id = ?
-                    """,
-                    (embedding.tobytes(), movie_id)
-                )
-                logger.info(f"Updated embedding for movie {movie_id}: {title}")
-                
+            movie.embedding = embedding.tobytes()
+            db.commit()
+            logger.info(f"Updated embedding for movie {movie.id}: {movie.title}")
         except Exception as e:
-            logger.error(f"Error updating embedding for movie {movie_id}: {e}")
-            
+            logger.error(f"Error updating embedding for movie {movie.id}: {e}")
+
     def update_all_embeddings(self):
-        """Update embeddings for all movies in the database."""
-        with self.connect_db() as conn:
-            # Get all movies without embeddings
-            movies = conn.execute("""
-                SELECT id, title, description, genres 
-                FROM movies 
-                WHERE embedding IS NULL
-            """).fetchall()
-            
-        logger.info(f"Generating embeddings for {len(movies)} movies...")
-        
-        for movie in movies:
-            self.update_movie_embedding(
-                movie['id'],
-                movie['title'],
-                movie['description'],
-                movie['genres']
-            )
-            
+        """Update embeddings for all movies in the database using SQLAlchemy."""
+        for db in get_db():
+            movies = db.query(Movie).filter(Movie.embedding == None).all()
+            logger.info(f"Generating embeddings for {len(movies)} movies...")
+            for movie in movies:
+                self.update_movie_embedding(db, movie)
+
     def find_similar_movies(self, movie_id: int, limit: int = 5) -> list:
         """Find similar movies based on embedding similarity."""
         with self.connect_db() as conn:

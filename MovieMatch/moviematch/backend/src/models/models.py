@@ -5,10 +5,8 @@ SQLAlchemy models for the MovieMatch backend.
 from datetime import datetime
 from typing import Optional
 from sqlalchemy import Column, Integer, String, Float, DateTime, LargeBinary, Text, Boolean, ForeignKey
-from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
-
-Base = declarative_base()
+from ..database.db import Base
 
 class Movie(Base):
     """Movie model."""

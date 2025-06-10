@@ -10,6 +10,11 @@ from ..models.models import Movie
 from ..config import settings
 # from ..database.db import get_db
 
+def parse_json_field(val):
+    if isinstance(val, str):
+        return json.loads(val)
+    return val if val else []
+
 class MovieService:
     """Service for movie-related operations."""
     
@@ -68,7 +73,7 @@ class MovieService:
         result = []
         for movie in movies:
             movie_dict = movie.to_dict()
-            movie_dict['genres'] = json.loads(movie_dict['genres']) if movie_dict['genres'] else []
+            movie_dict['genres'] = parse_json_field(movie_dict['genres'])
             result.append(movie_dict)
         return result
     
@@ -79,7 +84,7 @@ class MovieService:
             return None
             
         movie_dict = movie.to_dict()
-        movie_dict['genres'] = json.loads(movie_dict['genres']) if movie_dict['genres'] else []
+        movie_dict['genres'] = parse_json_field(movie_dict['genres'])
         return movie_dict
     
     def get_similar_movies(self, db: Session, movie_id: int, limit: int = 5) -> List[dict]:
@@ -101,7 +106,7 @@ class MovieService:
                 continue
                 
             movie_dict = movie.to_dict()
-            movie_dict['genres'] = json.loads(movie_dict['genres']) if movie_dict['genres'] else []
+            movie_dict['genres'] = parse_json_field(movie_dict['genres'])
             
             target_embedding = self.bytes_to_array(movie.embedding)
             similarity = np.dot(source_embedding, target_embedding) / (

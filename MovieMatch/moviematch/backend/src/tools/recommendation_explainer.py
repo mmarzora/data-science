@@ -13,7 +13,12 @@ from collections import defaultdict
 
 from ..models.models import Movie, UserPreference, MatchingSession
 from ..services.movie_service import movie_service
-from ..database.database import get_db
+from ..database.db import get_db
+
+def parse_json_field(val):
+    if isinstance(val, str):
+        return json.loads(val)
+    return val if val else []
 
 class RecommendationExplainer:
     """Explains why movies were recommended to users."""
@@ -64,7 +69,7 @@ class RecommendationExplainer:
         
         # Calculate explanation components
         movie_dict = movie.to_dict()
-        movie_dict['genres'] = json.loads(movie_dict['genres']) if movie_dict['genres'] else []
+        movie_dict['genres'] = parse_json_field(movie_dict['genres']) if movie_dict['genres'] else []
         
         # Get current stage and weights
         stage = self._determine_stage(session)
@@ -119,7 +124,7 @@ class RecommendationExplainer:
             return None
         
         return {
-            'genre_preferences': json.loads(prefs.genre_preferences) if prefs.genre_preferences else {},
+            'genre_preferences': parse_json_field(prefs.genre_preferences) if prefs.genre_preferences else {},
             'embedding_vector': movie_service.bytes_to_array(prefs.embedding_vector) if prefs.embedding_vector else None,
             'confidence_score': prefs.confidence_score,
             'total_interactions': prefs.total_interactions

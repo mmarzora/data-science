@@ -14,6 +14,11 @@ from collections import defaultdict
 from ..models.models import Movie, UserPreference, MatchingSession, UserFeedback
 from .movie_service import movie_service
 
+def parse_json_field(val):
+    if isinstance(val, str):
+        return json.loads(val)
+    return val if val else []
+
 class MatchingService:
     """Service for the MovieMatch recommendation algorithm."""
     
@@ -133,7 +138,7 @@ class MatchingService:
             }
         
         return {
-            'genre_preferences': json.loads(prefs.genre_preferences) if prefs.genre_preferences else {},
+            'genre_preferences': parse_json_field(prefs.genre_preferences) if prefs.genre_preferences else {},
             'embedding_vector': movie_service.bytes_to_array(prefs.embedding_vector) if prefs.embedding_vector else None,
             'confidence_score': prefs.confidence_score,
             'total_interactions': prefs.total_interactions
@@ -214,7 +219,7 @@ class MatchingService:
         
         for movie in candidates:
             movie_dict = movie.to_dict()
-            movie_dict['genres'] = json.loads(movie_dict['genres']) if movie_dict['genres'] else []
+            movie_dict['genres'] = parse_json_field(movie_dict['genres'])
             
             # Calculate genre compatibility
             genre_score = self._calculate_genre_score(
@@ -376,14 +381,14 @@ class MatchingService:
             db.add(prefs)
         
         # Parse current preferences
-        genre_prefs = json.loads(prefs.genre_preferences) if prefs.genre_preferences else {}
+        genre_prefs = parse_json_field(prefs.genre_preferences) if prefs.genre_preferences else {}
         current_embedding = movie_service.bytes_to_array(prefs.embedding_vector) if prefs.embedding_vector else None
         
         # Calculate learning rate
         learning_rate = max(0.05, 0.3 * (0.9 ** (prefs.total_interactions / 10)))
         
         # Update genre preferences
-        movie_genres = json.loads(movie.genres) if movie.genres else []
+        movie_genres = parse_json_field(movie.genres) if movie.genres else []
         feedback_value = 1.0 if feedback_type == 'like' else 0.0 if feedback_type == 'dislike' else 0.5
         
         for genre in movie_genres:

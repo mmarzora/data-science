@@ -16,7 +16,12 @@ import re
 
 from ..models.models import Movie, UserPreference
 from ..services.movie_service import movie_service
-from ..database.database import get_db
+from ..database.db import get_db
+
+def parse_json_field(val):
+    if isinstance(val, str):
+        return json.loads(val)
+    return val if val else []
 
 class SemanticAnalyzer:
     """Analyzes movie embeddings to extract semantic themes."""
@@ -66,7 +71,7 @@ class SemanticAnalyzer:
         
         # Get movie text for keyword analysis
         movie_text = f"{movie.title} {movie.description or ''}"
-        genres = json.loads(movie.genres) if movie.genres else []
+        genres = parse_json_field(movie.genres) if movie.genres else []
         
         # Analyze themes using both embedding similarity and keyword matching
         themes = self._extract_themes_from_text(movie_text, genres)
@@ -224,7 +229,7 @@ class SemanticAnalyzer:
             movie = db.query(Movie).filter(Movie.id == movie_data['id']).first()
             if movie:
                 movie_text = f"{movie.title} {movie.description or ''}"
-                genres = json.loads(movie.genres) if movie.genres else []
+                genres = parse_json_field(movie.genres) if movie.genres else []
                 themes = self._extract_themes_from_text(movie_text, genres)
                 
                 for theme, score in themes.items():
@@ -251,7 +256,7 @@ class SemanticAnalyzer:
                 'id': movie.id,
                 'title': movie.title,
                 'similarity': float(similarity),
-                'genres': json.loads(movie.genres) if movie.genres else []
+                'genres': parse_json_field(movie.genres) if movie.genres else []
             })
         
         similarities.sort(key=lambda x: x['similarity'], reverse=True)

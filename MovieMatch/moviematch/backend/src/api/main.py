@@ -1,26 +1,23 @@
 from fastapi import FastAPI, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
-import sqlite3
 import json
 import uuid
 from typing import List, Optional, Dict
 from pydantic import BaseModel
 import os
 import sys
-from pathlib import Path
 import logging
 from dotenv import load_dotenv
 from datetime import datetime
 from .routes import matching, movies, embedding_analysis
-from ..database.database import init_db
 from ..config import settings
 from ..tools.recommendation_explainer import RecommendationExplainer
 from sqlalchemy.orm import Session
 from fastapi import Depends
-from ..database.database import get_db
+from ..database.db import get_db
 
 # Load environment variables
-load_dotenv()
+load_dotenv(dotenv_path='.env')
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -36,11 +33,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# Database path - pointing to the populated database with genre names
-DB_PATH = Path(__file__).parent.parent / "database" / "movies.db"
-logger.info(f"API using database at: {DB_PATH}")
-logger.info(f"Database exists: {DB_PATH.exists()}")
 
 class Movie(BaseModel):
     id: int
@@ -96,11 +88,6 @@ async def health_check():
     """Health check endpoint."""
     return {"status": "healthy", "service": "moviematch-backend"}
 
-# Initialize database on startup
-@app.on_event("startup")
-async def startup_event():
-    """Initialize database on startup."""
-    init_db()
 
 # Add explanation endpoint
 @app.get("/api/matching/explain/{session_id}/{movie_id}")
